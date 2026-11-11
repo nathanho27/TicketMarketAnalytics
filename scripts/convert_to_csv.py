@@ -40,14 +40,27 @@ import config
 
 log = logging.getLogger("convert")
 
-# Event names that are clearly not a ticket to the event itself.
-NON_EVENT_NAME = re.compile(
-    r"\bparking\b|not a (concert|game) ticket|no ticket included|vip upgrade"
-    r"|\badd[- ]?on\b|\bupgrade\b|\bvoucher\b|\b\d+[- ]day pass\b",
-    re.IGNORECASE,
-)
 # Ticketmaster classification sub-types that are not concerts or games.
-NON_EVENT_SUBTYPES = {"Sightseeing/Facility"}
+# In the 2026-11-10 data "Museum" and "Tour" are only used for museum and
+# arena tours (e.g. "The Sports Museum Tour", "TD Garden Arena Tour").
+NON_EVENT_SUBTYPES = {"Sightseeing/Facility", "Museum", "Tour"}
+
+# Event names that are clearly not a ticket to a concert or game:
+# (exclusion reason, pattern, segments it applies to or None for all).
+NON_EVENT_NAMES = [
+    ("addon_or_multiday_pass", re.compile(
+        r"\bparking\b|not a (concert|game) ticket|no ticket included|vip upgrade"
+        r"|\badd[- ]?on\b|\bupgrade\b|\bvoucher\b|\b\d+[- ]day pass\b", re.IGNORECASE), None),
+    # Facility tours. Not applied to Music: concert tours are often called "... Arena Tour".
+    ("facility_tour", re.compile(
+        r"\b(stadium|arena|ballpark|museum|facility|backstage|behind[- ]the[- ]scenes|guided)\s+tours?\b",
+        re.IGNORECASE), {"Sports", "Miscellaneous", "Undefined", None}),
+    ("skating_session", re.compile(r"\bskat(e|ing)\b", re.IGNORECASE), None),
+]
+
+# Borderline: admission to an attraction (e.g. "Belmont Park - General Admission").
+# Kept, but flagged "review_attraction_admission" for a human decision.
+REVIEW_NAME = re.compile(r"\badmission\b", re.IGNORECASE)
 
 # Ticketmaster uses this date when an on-sale date is unknown.
 PLACEHOLDER_DATE_PREFIX = "1900-01-01"
@@ -330,6 +343,8 @@ def quality_flags(row):
         flags.append("venue_state_outside_search_area")
     if row["venue_country"] and row["venue_country"] != "US":
         flags.append("non_us_venue")
+    if REVIEW_NAME.search(row["event_name"]):
+        flags.append("review_attraction_admission")
     if row["search_city_count"] > 1:
         flags.append("multiple_search_cities")
     if row["search_hit_count"] > row["search_city_count"]:
@@ -341,8 +356,9 @@ def exclusion_reason(row, event_window):
     """Why a row is not a real event listing, or None to keep it."""
     if row["class_subtype"] in NON_EVENT_SUBTYPES:
         return f"non_event_subtype:{row['class_subtype']}"
-    if NON_EVENT_NAME.search(row["event_name"]):
-        return "non_event_name"
+    for reason, pattern, segments in NON_EVENT_NAMES:
+        if (segments is None or row["segment"] in segments) and pattern.search(row["event_name"]):
+            return f"non_event_name:{reason}"
     start, end = event_window
     if not (start <= (row["local_date"] or "") <= end):
         return "outside_date_window"

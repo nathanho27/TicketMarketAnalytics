@@ -127,16 +127,34 @@ Totals and completeness:
   - 12,114 events received, which is 12,088 unique event IDs. 25 kept events
     were found by both Dallas and Fort Worth. San Jose–San Francisco shared
     none.
-  - 11,943 events kept and 145 excluded: 120 venue/stadium tours, plus 25
-    VIP-upgrade, parking and multi-day-pass listings.
-- **Census Geocoder:** 1,020 of 1,020 venues matched (county, tract, ZCTA
-  and metro area 100%; incorporated place 89%).
+  - **11,443 events kept and 645 excluded** (non-event filter updated
+    2026-11-11; the raw data is unchanged):
+
+    | Exclusion reason | Events | What |
+    |---|---|---|
+    | `non_event_name:skating_session` | 282 | "Holidays at The Rock Skating Rink" (San Antonio), labeled Music/Rock/Concert |
+    | `non_event_subtype:Museum` | 192 | "The Sports Museum Tour" (Boston) |
+    | `non_event_subtype:Sightseeing/Facility` | 120 | Venue and stadium tours (e.g. Yankee Stadium) |
+    | `non_event_name:addon_or_multiday_pass` | 25 | VIP upgrades, parking, multi-day passes |
+    | `non_event_name:facility_tour` | 21 | "Classic/Vip Stadium Tour" at Soldier Field (Chicago) |
+    | `non_event_subtype:Tour` | 5 | "TD Garden Arena Tour" (Boston) |
+
+    The facility-tour name rule is not applied to Music events, because
+    concert tours are often named "... Arena Tour".
+  - Borderline listings are kept but flagged `review_attraction_admission`
+    (17 events) for a decision:
+    - "Belmont Park – General Admission" (15);
+    - "Brushstrokes & Ballads VIP Admission" at an art museum (1);
+    - a "General Admission + F1 Afterparty Ticket Package" at the Sphere (1).
+- **Census Geocoder:** all venues matched (county, tract, ZCTA and metro
+  area 100%; incorporated place 89%). After the filter update the venue
+  file has 1,019 venues: The Sports Museum had no remaining events.
 - **Census API:** 45 requests, 0 failed. The API key does not appear in any
   log or raw file.
 
 Events by status:
-- Music: 8,936 onsale, 211 offsale, 157 cancelled, 82 rescheduled.
-- Sports: 2,383 onsale, 151 offsale, 7 cancelled, 7 rescheduled.
+- Music: 8,654 onsale, 211 offsale, 157 cancelled, 82 rescheduled.
+- Sports: 2,167 onsale, 151 offsale, 5 cancelled, 7 rescheduled.
 - 9 events have a primary classification of Miscellaneous/Undefined (found
   by the Music search).
 
@@ -144,18 +162,19 @@ Missing values in the events CSV (as quality flags):
 
 | Flag | Events |
 |---|---|
-| `no_promoter` | 6,295 |
+| `no_promoter` | 5,795 |
 | `no_event_timezone` (venue timezone still present) | 2,694 |
-| `no_performer` | 2,273 |
+| `no_performer` | 2,252 |
 | `placeholder_onsale_date` | 2,254 |
 | `zero_price_range` | 428 |
 | `no_start_time` (date only) | 286 |
 | `no_venue_address` | 121 |
 | `multiple_search_cities` | 25 |
+| `review_attraction_admission` (kept, needs a decision) | 17 |
 | `venue_state_outside_search_area` | 2 |
 
 Prices:
-- Usable listed price: **2,676 of 11,943 events (22%)**.
+- Usable listed price: **2,676 of 11,443 events (23%)**.
 - All 2,676 are TicketWeb events. None of the 7,750 ticketmaster.com events
   has one.
 - Share with a listed price varies a lot: New York 53%, Las Vegas, Austin,
@@ -196,9 +215,9 @@ All files are in `data/processed/` and end in `_2026-11-10_222442.csv`.
 
 | File | Rows | One row per | What it represents |
 |---|---|---|---|
-| `ticketmaster_events` | 11,943 | Ticketmaster event ID | Every kept Music/Sports event, with all search areas that found it |
-| `ticketmaster_excluded` | 145 | Ticketmaster event ID | Removed non-event listings, same columns plus `exclusion_reason` |
-| `venues_geocoded` | 1,020 | Ticketmaster venue ID | Venue as listed by Ticketmaster plus the Census areas its coordinates fall in |
+| `ticketmaster_events` | 11,443 | Ticketmaster event ID | Every kept Music/Sports event, with all search areas that found it |
+| `ticketmaster_excluded` | 645 | Ticketmaster event ID | Removed non-event listings, same columns plus `exclusion_reason` |
+| `venues_geocoded` | 1,019 | Ticketmaster venue ID | Venue (with at least one kept event) as listed by Ticketmaster plus the Census areas its coordinates fall in |
 | `census_acs1_2025` | 2,071 | geography (level + GEOID) | ACS 2025 1-year population and median household income: places, counties, metro/micro areas (65,000+ people) |
 | `census_acs5_2024` | 129,646 | geography (level + GEOID) | ACS 2020–2024 5-year, same values: tracts in the 23 states + DC we need, plus all ZCTAs, places, counties and metro/micro areas |
 | `census_cbp2023` | 7,302 | geography + NAICS code | CBP 2023 establishments (and employees) for 5 live-event industries, plus "not published" rows for our geographies |
