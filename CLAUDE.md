@@ -297,3 +297,32 @@ These describe how to *record* information, not what the database should be.
   - business questions verbatim, with the date approved.
 - **Record row counts against the source.** For any imported data, compare
   with the counts in the "Working Dataset" table and explain differences.
+
+## Collaboration rules
+
+- Both teammates (Nathan and Nick) edit CLAUDE.md through their own Claude
+  Code sessions.
+- Always `git pull` before editing and push soon after.
+- The progress log below is **append-only**: add new dated entries at the
+  bottom, and never edit someone else's entry.
+- Tag each entry with the author's name.
+- Never commit data files. CSVs stay out of Git. Processed CSVs live outside
+  the repo, in the `../processed copy` folder.
+
+## Current phase
+
+Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
+
+## Progress log
+
+### 2026-11-11 — Nick Silva
+- Received the processed CSVs from Nathan and profiled all files. Row counts match the documented numbers (11,443 events, 1,019 venues, 645 excluded, 2,071 ACS1, 129,646 ACS5, 7,302 CBP, 22,088 search-area tracts).
+- Three extra files in the folder look like pilot runs (ticketmaster_events/excluded 2026-11-02, census_probe 2026-11-05); need to confirm with Nathan that they're superseded.
+- Findings to discuss for the ERD:
+  - A GEOID is unique only together with geo_level (and with naics_code in CBP).
+  - Many columns are pipe-delimited multi-value fields: attractions, promoters, genres, presales, add-ons, markets, quality_flags.
+  - 394 tracts belong to more than one search area, and 25 events matched both Dallas and Fort Worth.
+  - CBP NAICS codes are nested (7113 is the parent of 711310/711320; 7112 is the parent of 711211), so summing across codes double-counts.
+  - 2,380 CBP rows are suppressed.
+  - Event statuses include 162 cancelled, 89 rescheduled, and 363 offsale (docs/data_sources.md lists 362 because it counts only Music (211) and Sports (151); 1 more offsale event has segment "Miscellaneous").
+- Next step: Nathan and I decide what data to trim, then begin normalization and the ERD.
