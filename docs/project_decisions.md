@@ -132,6 +132,87 @@ Blank values (all expected):
 - **CBP:** El Paso 711320 has blank `establishments`, `employees` and
   `employees_noise_flag`, with `published = False`.
 
+## 2026-11-11: Duplicate-listing cleanup
+
+Decided by Nathan and Nick, relayed by Nick. Background: after the scope
+build, 146 groups of working events shared venue, date and start time. Most
+were the same event sold as separate listings (suites, half-price and premium
+seating tiers, multi-night passes). The 55 events that share a URL are
+recurring shows, not duplicates, and are not affected.
+
+Each decision is recorded per event in `docs/dedup_decisions.csv` (columns
+`event_id`, `action`, `reason`, `duplicate_of_event_id`, `note`; 185 rows:
+167 EXCLUDE, 18 KEEP). `duplicate_of_event_id` names the listing that stays;
+for multi-night passes it lists the individual nights, joined with ` | `.
+
+Applied by `scripts/apply_dedup_decisions.py`, which runs **after**
+`scripts/build_working_dataset.py`. It reads the six working CSVs and writes a
+new copy of all six to `<input folder>/working_dedup_v2/` (with
+`apply_dedup_decisions.log`). The input files are not changed. Nick's run
+used `--input-dir "../processed copy"`.
+
+### Reason codes
+
+| Action | Reason code | Rows | Meaning (from the decision notes) |
+|---|---|---|---|
+| EXCLUDE | `ticket_tier_duplicate` | 76 | Seating or price tier of an event that also has a regular listing |
+| EXCLUDE | `multi_event_pass` | 36 | Pass covering nights that are also listed individually |
+| EXCLUDE | `f1_zone_listing` | 40 | Las Vegas Grand Prix seating/hospitality zone or multi-day package; each race day is represented by one kept GA listing |
+| EXCLUDE | `same_headliner_duplicate` | 9 | Same show listed again (e.g. support act first, "MOVED TO" wording) |
+| EXCLUDE | `exact_duplicate` | 2 | Identical listing twice (the onsale copy is kept over a cancelled copy) |
+| EXCLUDE | `non_event_listing` | 4 | 3 open-mic sign-up sheets and 1 Ticketmaster test listing |
+| KEEP | `kept_copy` | 11 | The copy kept for a duplicated show |
+| KEEP | `f1_race_day_kept` | 3 | The single listing kept for each Grand Prix race day (Nov 19, 20, 21, all at Flamingo Zone) |
+| KEEP | `tier_no_base` | 2 | Tier listing kept because no regular listing exists |
+| KEEP | `pass_no_base` | 2 | Pass kept because no individual-day listings exist |
+
+Excluded events go to `working_excluded_events.csv` with the reason code as
+`exclusion_reason` and `metro_area_geoid` taken from the venue.
+
+### Venues removed
+
+Six Las Vegas Grand Prix venues had no events left, so the script drops them
+from `working_venues.csv`. This keeps the build's rule that every venue has
+at least one event.
+
+| Venue ID | Venue | Events before |
+|---|---|---|
+| `KovZ917AY9R` | East Harmon Zone | 12 |
+| `KovZ917AY9y` | Koval Zone by Heineken | 7 |
+| `KovZ917AY9V` | T-Mobile Zone at Sphere | 7 |
+| `KovZ917AVhX` | Grand Prix Plaza Zone | 7 |
+| `KovZ917AY9T` | The Performance Zone | 4 |
+| `KovZ917AIHV` | FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX | 2 |
+
+Las Vegas keeps 62 venues (68 before), including Flamingo Zone, and 944
+events (1,008 before).
+
+**Excluded events can reference venues that are not in the venues file.**
+110 of the 324 excluded rows do: 41 point to the six removed venues, and 69
+(`outside_24_metros`, from the scope build) point to venues outside the 24
+metros, which were never in the working venues file.
+
+### Resulting dataset (`working_dedup_v2/`, verified 2026-11-11)
+
+| File | Rows | Columns | Change |
+|---|---|---|---|
+| `working_events.csv` | 11,119 | 13 | 11,286 − 167 |
+| `working_excluded_events.csv` | 324 | 5 | 157 + 167 |
+| `working_venues.csv` | 1,006 | 9 | 1,012 − 6 |
+| `working_acs1_2025_metros.csv` | 24 | 8 | unchanged (copied) |
+| `working_cbp2023_metros.csv` | 72 | 8 | unchanged (copied) |
+| `market_labels.csv` | 24 | 3 | unchanged (copied) |
+
+Checks (script log plus a separate check by Nick's session):
+- no event ID in both the events and excluded files, and no duplicate IDs;
+- all 167 EXCLUDE IDs were in the original working events, and all 18 KEEP
+  IDs are still there;
+- the events file is the original minus exactly the 167, rows otherwise
+  unchanged; the original 157 excluded rows are preserved;
+- every venue has at least one event, and every event's venue exists;
+- the remaining venue rows and the three copied files are identical to the
+  input, and the input files' checksums are unchanged.
+
 ## Open items
 
 - **Business questions:** not yet written. To be added here verbatim by

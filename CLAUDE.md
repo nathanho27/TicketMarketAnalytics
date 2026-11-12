@@ -125,6 +125,8 @@ Verified counts (2026-11-11, header row excluded):
 | `market_labels.csv` | 24 | 3 | Metro area: official Census name and short market label |
 | `working_excluded_events.csv` | 157 | 5 | Event removed by the scope (`exclusion_reason`) |
 
+Updated 2026-11-11 by Nick: after the dedup step (scripts/apply_dedup_decisions.py), the current working files are in working_dedup_v2: 11,119 events, 1,006 venues, 324 excluded; ACS, CBP, and market labels unchanged. See docs/project_decisions.md.
+
 Scope in brief:
 - **Markets:** 24 Census metro areas, with each event assigned by its venue's
   metro. Dallas-Fort Worth is one market.
@@ -349,6 +351,11 @@ These describe how to *record* information, not what the database should be.
 - Tag each entry with the author's name.
 - Never commit data files. CSVs stay out of Git. Processed CSVs live outside
   the repo, in the `../processed copy` folder.
+  - **Exception:** `docs/dedup_decisions.csv` is committed. It holds the
+    team's cleaning decisions, not data, and `scripts/apply_dedup_decisions.py`
+    reads it. It keeps only the 5 decision columns (`event_id`, `action`,
+    `reason`, `duplicate_of_event_id`, `note`). Ticketmaster fields such as
+    event and venue names stay out of Git.
 
 ## Current phase
 
@@ -387,3 +394,14 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
   - All checks pass: no duplicate IDs, every event's venue and every venue's market exist, and working + excluded = 11,443 source events.
 - **Answer to Nick's question:** the 2026-11-02 (LA/NYC pilot) and 2026-11-05 (Census probe) files are superseded and not part of the working dataset.
 - Next step: Nathan sends Nick the working CSVs; then normalization and the ERD.
+
+### 2026-11-11 — Nick Silva
+- Received Nathan's 6 working CSVs and checked them against his entry: file names, row and column counts, exclusions and reference checks all match. 3 venue ZIP codes have stray spaces (`' 32210'`, `'90731 '`, `'07506 '`); not yet handled.
+- **Duplicate-listing cleanup**, agreed by Nathan and Nick. Details, reason codes and checks are in `docs/project_decisions.md`.
+  - Decisions are per event in `docs/dedup_decisions.csv` (185 rows: 167 EXCLUDE, 18 KEEP; committed as a documented exception to the no-CSV rule, decision columns only).
+  - New `scripts/apply_dedup_decisions.py` runs **after** `build_working_dataset.py`. It reads the 6 working CSVs and writes a new copy to `<input folder>/working_dedup_v2/`; the inputs are not changed. My run: `python3 scripts/apply_dedup_decisions.py --input-dir "../processed copy"`.
+  - Excluded: 76 ticket tiers, 36 multi-night passes, 40 F1 zone listings (one GA listing kept per race day), 11 duplicate copies of the same show, 4 non-events.
+  - 6 Las Vegas Grand Prix venues had no events left and were dropped, so every venue still has at least one event. Excluded events can reference venues that are not in the venues file.
+- **New counts:** 11,119 events, 324 excluded, 1,006 venues; ACS (24), CBP (72) and market labels (24) unchanged. All checks pass.
+- Nathan: to get the same files, run the script with `--input-dir data/processed/working_2026-11-10_222442`.
+- Next step: business questions, description of operations and business rules, then entities, ERD, primary keys and normalization (ERD due Nov 19).

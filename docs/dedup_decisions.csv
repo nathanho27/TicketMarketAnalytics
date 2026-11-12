@@ -1,0 +1,186 @@
+event_id,action,reason,duplicate_of_event_id,note
+rZ7HnEZ1Af8z37,EXCLUDE,exact_duplicate,rZ7HnEZ1A4vf8N,Identical listing twice
+rZ7HnEZ1Afuzb7,EXCLUDE,exact_duplicate,rZ7HnEZ1Af8dFV,Same listing; kept onsale copy over cancelled copy
+169ZkfkvMZA52av2,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_R-QB,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_Y-hQ,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_co_9,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_cs_x,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_ivbg,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_lvb0,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_msQY,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_n-br,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_nvb4,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G616_svhP,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G6ueKu66s,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9Zkf7GkdgYJxC,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9ZkfAGkdm_7tH,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9ZkfAGkeN6nkO,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1AvjZ_fGkDQgEDb,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPv-GAuDVaQ,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPv8GA2ma9a,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPvPGA2Id19,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPvPGA2td1E,EXCLUDE,f1_zone_listing,17AYv0G61pKg52u,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+169ZkfkvMZAC2ae7,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G6ueKuE6H,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9Zkf7Gkdgspxh,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9ZkfAGkdm_0nF,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9ZkfAGkeNFQk0,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1AvjZ_fGkDQUMDL,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPv-GAuH01v,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPv8GA2my99,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPvPGA2IK1q,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPvPGA2tN1c,EXCLUDE,f1_zone_listing,17AYv0G61pKgD20,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+17AYv0G6ueKCEF1,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9Zkf7Gkdgwkxq,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9ZkfAGkdmQfn8,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1A9ZkfAGkeNFBkl,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1AvjZ_fGkDQMED0,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1FAYvPvOrZZ72ae2,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPv-GAuWf1q,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPv8GA2Rt9x,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPvPGA2IS1N,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+1kAYvPvPGA2nd1S,EXCLUDE,f1_zone_listing,17AYv0G61pKU52I,Grand Prix seating/hospitality zone or multi-day package; race day represented by the kept GA listing
+rZ7HnEZ1AfFzb7,EXCLUDE,multi_event_pass,rZ7HnEZ1AfFz40 | rZ7HnEZ1AfFzp7,"Individual nights listed separately: 2026-11-14, 2026-11-15"
+G5ezZ_fhjdIa4,EXCLUDE,multi_event_pass,G5ezZ_fhhHbaa | G5ezZ_fhhXFaG | G5ezZ_fhhTzaC | G5ezZ_fhjvIaK,"Individual nights listed separately: 2026-11-18, 2026-11-19, 2026-11-20, 2026-11-21"
+1A4Zk3aGkdopGZg,EXCLUDE,multi_event_pass,1A4Zk3FGkdZaQvH | 1A4Zk3FGkdZJ17d | 1A4Zk34Gkegk6aY | 1A4Zk34GkegYEGi,"Individual nights listed separately: 2026-11-19, 2026-11-20, 2026-11-21, 2026-11-22"
+1AvfZ_aGkMLEoao,EXCLUDE,multi_event_pass,1A4Zk3FGkdZaQvH | 1A4Zk3FGkdZJ17d | 1A4Zk34Gkegk6aY | 1A4Zk34GkegYEGi,"Individual nights listed separately: 2026-11-19, 2026-11-20, 2026-11-21, 2026-11-22"
+17A8v0G6CXT6lgg,EXCLUDE,multi_event_pass,17A8v0G6CXDVlxv | 17A8v0G6CXDghx6,"Individual nights listed separately: 2026-11-20, 2026-11-21"
+rZ7HnEZ1AfFsp7,EXCLUDE,multi_event_pass,rZ7HnEZ1AfFsb7 | rZ7HnEZ1AfFs_7,"Individual nights listed separately: 2026-11-20, 2026-11-21"
+vv177Z_8GkRIb15s,EXCLUDE,multi_event_pass,vv177Z_8GkREOned | vv177Z_8GkREH1kW,"Individual nights listed separately: 2026-11-20, 2026-11-21"
+1AvfZ_aGkMjpLl6,EXCLUDE,multi_event_pass,1A4Zk3FGkdZaQvH | 1A4Zk3FGkdZJ17d | 1A4Zk34Gkegk6aY | 1A4Zk34GkegYEGi,"Individual nights listed separately: 2026-11-19, 2026-11-20, 2026-11-21, 2026-11-22"
+k7vGF_G2JYqGS,EXCLUDE,multi_event_pass,k7vGF_G2KkbOi | k7vGF_G2QJQEl | k7vGF_G2-Ti8j,"Individual nights listed separately: 2026-11-19, 2026-11-20, 2026-11-21"
+G5dIZ_o6Jm_Lt,EXCLUDE,multi_event_pass,G5dIZ_8TSAvUt | G5dIZ_8TSAoUm,"Individual nights listed separately: 2026-11-27, 2026-11-28"
+vvG18Z_CEvDGHI,EXCLUDE,multi_event_pass,vvG18Z_CEvUGHA | vvG18Z_CEvzGH9,"Individual nights listed separately: 2026-11-27, 2026-11-28"
+k7vGF_3RKaXVb,EXCLUDE,multi_event_pass,k7vGF_3RK3XMb | k7vGF_3R3rXJg,"Individual nights listed separately: 2026-11-27, 2026-11-28"
+1AdZZ_3GkgzQs3Z,EXCLUDE,multi_event_pass,17GZv0G6CTJXh5V | 11GZvP19aOk4vC,"Individual nights listed separately: 2026-12-01, 2026-12-02"
+k7vGF_CHv442Q,EXCLUDE,multi_event_pass,k7vGF_CTWNf50 | k7vGF_CTXK0OL | k7vGF_CTTk7iu | k7vGF_CTTi7gF,"Individual nights listed separately: 2026-12-02, 2026-12-03, 2026-12-04, 2026-12-05"
+17A8v0G62Bm0I4x,EXCLUDE,multi_event_pass,17A8v0G62Bn99zZ | 17A8v0G62Bnb6z7,"Individual nights listed separately: 2026-12-04, 2026-12-05"
+1A4Zkf-GkeHyQjE,EXCLUDE,multi_event_pass,17A8v0G62Bn99zZ | 17A8v0G62Bnb6z7,"Individual nights listed separately: 2026-12-04, 2026-12-05"
+k7vGF_CHvH4jO,EXCLUDE,multi_event_pass,k7vGF_CTWNf50 | k7vGF_CTXK0OL | k7vGF_CTTk7iu | k7vGF_CTTi7gF,"Individual nights listed separately: 2026-12-02, 2026-12-03, 2026-12-04, 2026-12-05"
+G5vYZ_2NhLQ4c,EXCLUDE,multi_event_pass,G5vYZ_2NoqbG8 | G5vYZ_2NKhFEa,"Individual nights listed separately: 2026-12-04, 2026-12-05"
+G5vzZ_oJ0Eye-,EXCLUDE,multi_event_pass,G5vzZ_oJ0Ntv_ | G5vzZ_oJ0ladB,"Individual nights listed separately: 2026-12-11, 2026-12-12"
+vvG1IZ_8n6qAMQ,EXCLUDE,multi_event_pass,vvG1IZ_8QfZ9U_ | vvG1IZ_8QKS6gA,"Individual nights listed separately: 2026-12-11, 2026-12-12"
+rZ7HnEZ1AfGOf7,EXCLUDE,multi_event_pass,rZ7HnEZ1AfGOof,Multi-night pass; excluded like the other passes
+vv178Z_3GkBBGzBY,EXCLUDE,multi_event_pass,vv178Z_3GkIfJBzp | vv178Z_3GkIfEQzN | vv178Z_3GkIfI1zs,"Individual nights listed separately: 2026-12-18, 2026-12-19, 2026-12-20"
+vvG1YZ_2YDIyCO,EXCLUDE,multi_event_pass,vvG1YZ_2YDEtCQ | vvG1YZ_2YDtyCE,"Individual nights listed separately: 2026-12-18, 2026-12-19"
+1FA8vPfw-wZ72a1G,EXCLUDE,multi_event_pass,1FA8vPfwe8Z72dGv | 1FA8vPfw_9Z72FvF,"Individual nights listed separately: 2026-12-18, 2026-12-19"
+G5vYZ_KIA6n57,EXCLUDE,multi_event_pass,G5vYZ_KIZgFjn | G5vYZ_KIe4td1,"Individual nights listed separately: 2026-12-30, 2026-12-31"
+k7vGF_oR0vs-i,EXCLUDE,multi_event_pass,k7vGF_oRLhTK3 | k7vGF_oRLxR4q,"Individual nights listed separately: 2026-12-30, 2026-12-31"
+vvG18Z_CM8Huwe,EXCLUDE,multi_event_pass,vvG18Z_CM8zcsl | vvG18Z_CM8BqsV,"Individual nights listed separately: 2026-12-30, 2026-12-31"
+rZ7HnEZ1AfCo00,EXCLUDE,multi_event_pass,rZ7HnEZ1AfCo07 | rZ7HnEZ1AfuoQf,"Individual nights listed separately: 2026-12-31, 2027-01-01"
+vv1AvZkfaGkdkKRSA,EXCLUDE,multi_event_pass,vvG17Z_1M1WMzq | vv1AvZkfAGkdfhEMZ,"Individual nights listed separately: 2027-01-02, 2027-01-03"
+G5vYZ_fHbJ98u,EXCLUDE,multi_event_pass,G5vYZ_fHfogyq | G5vYZ_fH4Ykft,"Individual nights listed separately: 2027-01-12, 2027-01-13"
+vv177Z_4Gkte6eWT,EXCLUDE,multi_event_pass,vv177Z_4GkIBde_b | vv177Z_4GkIHex0O,"Individual nights listed separately: 2027-01-14, 2027-01-16"
+G5vYZ_oEfs197,EXCLUDE,multi_event_pass,G5vYZ_oEoFtlm | G5vYZ_oEoatlX,"Individual nights listed separately: 2027-01-15, 2027-01-16"
+vv1AaZk4FGkdQZo72,EXCLUDE,multi_event_pass,vv1ke8vP3aGA5fILZ | vv1ke8vP3aGA54IL9,"Individual nights listed separately: 2027-01-15, 2027-01-16"
+1FAYv0b_jAZ7uaeF,EXCLUDE,multi_event_pass,1FAYv0b_Z4Z7GGvk | 16vjZ_kk3G7nDXr,"Individual nights listed separately: 2027-01-28, 2027-01-30"
+G5vzZ_Kxn5yWx,EXCLUDE,multi_event_pass,G5vzZ_KxxKbNP | G5vzZ_Kx0WbMS,"Individual nights listed separately: 2027-01-29, 2027-01-30"
+vvG1YZ_okM8Cj1,EXCLUDE,multi_event_pass,vvG1YZ_okM3Cj4 | vvG1YZ_okMoCjo,"Individual nights listed separately: 2027-01-30, 2027-01-31"
+rZ7HnEZ1AfuM-7,EXCLUDE,non_event_listing,,"Open mic sign-up sheet, not a show"
+rZ7HnEZ1Afuzf7,EXCLUDE,non_event_listing,,"Open mic sign-up sheet, not a show"
+rZ7HnEZ1AfCZxf,EXCLUDE,non_event_listing,,"Open mic sign-up sheet, not a show"
+vv177Z_fGkYu6kMr,EXCLUDE,non_event_listing,,Ticketmaster test listing
+rZ7HnEZ1AfuJjV,EXCLUDE,same_headliner_duplicate,rZ7HnEZ1AfGdA7,Same Deante' Hitchcock show; one listing leads with the support act
+G5vYZ_2fIMqin,EXCLUDE,same_headliner_duplicate,G5vYZ_fD80sy7,Same show; one copy has a MOVED TO note in the name
+rZ7HnEZ1Afuz40,EXCLUDE,same_headliner_duplicate,rZ7HnEZ1AfazQf,Same Bluebird on 3rd show; kept the listing with the lineup
+vvG10Z_5bAWHUD,EXCLUDE,same_headliner_duplicate,vv1AaZk4pGkdxZNvo,Same show listed twice with MOVED TO wording
+rZ7HnEZ1Afuz4V,EXCLUDE,same_headliner_duplicate,rZ7HnEZ1AfazbV,Same Bluebird on 3rd show; kept the listing with the lineup
+rZ7HnEZ1AfuI17,EXCLUDE,same_headliner_duplicate,rZ7HnEZ1AfGdFf,Same Deante' Hitchcock show; one listing leads with the support act
+rZ7HnEZ1Afuzp7,EXCLUDE,same_headliner_duplicate,rZ7HnEZ1AfazQ7,Same Bluebird on 3rd show; kept the listing with the lineup
+k7vGF_p91iGVV,EXCLUDE,same_headliner_duplicate,LvZ18QmIWieWX0qEpiAIl,Same NYE Reggaefest; kept onsale copy
+Z7r9jZ1AAZ-fO,EXCLUDE,same_headliner_duplicate,Z7r9jZ1A70tod,"Same orchestra, hall, date and time; one performance can only happen once. Different soloist text is likely a listing error."
+vv1AAZkfAGkdiuz9m,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CUYVzv7,Seating/price tier of: CBJ V. TAMPA BAY LIGHTNING
+17AYv0G65p_1As2,EXCLUDE,ticket_tier_duplicate,1A9Zk37GkdXVozi,Seating/price tier of: Eagles Live at Sphere
+vvG1YZ_kEYzuCJ,EXCLUDE,ticket_tier_duplicate,vvG1YZ_k9prrh2,Seating/price tier of: Hot Wheels Monster Trucks™ Live Glow-N-Fire
+17AYv0G65p_1Ps9,EXCLUDE,ticket_tier_duplicate,1A9Zk37GkdXg-zV,Seating/price tier of: Eagles Live at Sphere
+vv1AAZkfAGkdiCF9Y,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CM9OWZs,Seating/price tier of: CBJ V. PHILADELPHIA FLYERS
+vvG1YZ_kEYBuCm,EXCLUDE,ticket_tier_duplicate,vvG1YZ_k9pLmh9,Seating/price tier of: Hot Wheels Monster Trucks™ Live Glow-N-Fire
+vvG1YZ_kEYyuCt,EXCLUDE,ticket_tier_duplicate,vvG1YZ_k9pLmh9,Seating/price tier of: Hot Wheels Monster Trucks™ Live Glow-N-Fire
+vvG1YZ_kEYDuCU,EXCLUDE,ticket_tier_duplicate,vvG1YZ_k9pxChP,Seating/price tier of: Hot Wheels Monster Trucks™ Live Glow-N-Fire
+vvG1YZ_6N87QDd,EXCLUDE,ticket_tier_duplicate,vvG1YZ_61DJQEl,Seating/price tier of: Ty Myers: The Legal Tour 2026
+G5diZ_KdC4t4X,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksM7ob,Seating/price tier of: New York Rangers vs. Carolina Hurricanes
+G5vzZ_1he_r2t,EXCLUDE,ticket_tier_duplicate,G5vzZ_1Kxjfbe,Seating/price tier of: JOURNEY - Final Frontier Tour (An Evening With)
+G5vzZ_2KqoT5i,EXCLUDE,ticket_tier_duplicate,G5vzZ_6O7AdjR,Seating/price tier of: Denver Broncos vs. Las Vegas Raiders
+vvG1YZ_oN_xQE5,EXCLUDE,ticket_tier_duplicate,vvG1YZ_oEbGiZg,Seating/price tier of: LS² - Hoops with Heart - Weekend I
+1AvfZ_KGkzrsWiC,EXCLUDE,ticket_tier_duplicate,1A4ZkfxGkdPTCCa,Seating/price tier of: Stevie Wonder Songs in The Key of Life Performances 50th Anniversary
+vv1AAZkfAGkdiCI9z,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CM9xuZX,Seating/price tier of: CBJ V. NEW JERSEY DEVILS
+17AYv0G65p_5AsQ,EXCLUDE,ticket_tier_duplicate,1A9Zk37GkdXUsyv,Seating/price tier of: Eagles Live at Sphere
+vv1AAZkfAGkdiCzb6,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMjqWLa,Seating/price tier of: CBJ V. DETROIT RED WINGS
+vvG1YZ_kIAjw6j,EXCLUDE,ticket_tier_duplicate,vvG1YZ_7cPUxpT,Seating/price tier of: Intocable: Cultura Tour 2026
+17AYv0G65p_54s-,EXCLUDE,ticket_tier_duplicate,1A9Zk37GkdXzvy5,Seating/price tier of: Eagles Live at Sphere
+G5diZ_KdC4ypv,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksMfoq,Seating/price tier of: New York Rangers vs. Calgary Flames
+G5diZ_KdCp_p7,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksMfo-,Seating/price tier of: New York Rangers vs. Carolina Hurricanes
+vvG1YZ_KpCJSfH,EXCLUDE,ticket_tier_duplicate,vvG1YZ_Keg__UB,Seating/price tier of: 106.1 KISS FM's Jingle Ball Presented by Capital One
+G5vzZ_5w29b6K,EXCLUDE,ticket_tier_duplicate,G5vzZ_55Eui2W,Seating/price tier of: Gracie Abrams: The Look at My Life Tour presented by Capital One
+G5vzZ_5woJzrM,EXCLUDE,ticket_tier_duplicate,G5vzZ_5lHXEdG,Seating/price tier of: Gracie Abrams: The Look at My Life Tour presented by Capital One
+17AYv0G6249EvSh,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdpXLsb,Seating/price tier of: Eagles Live at Sphere
+17AYv0G6249E-S-,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdpXRsr,Seating/price tier of: Eagles Live at Sphere
+G5vzZ_2KqiLCE,EXCLUDE,ticket_tier_duplicate,G5vzZ_6O7GNrp,Seating/price tier of: Denver Broncos vs. Miami Dolphins
+vvG1YZ_fSe29VF,EXCLUDE,ticket_tier_duplicate,vvG1YZ_fwTBMES,Seating/price tier of: LS² - Hoops with Heart - Weekend II
+G5vzZ_o1n2HqL,EXCLUDE,ticket_tier_duplicate,G5vzZ_8U_UAYk,Seating/price tier of: Jonas Brothers: The Burning Up Tour All Over Again
+vv1AAZkfAGkdi2Fbo,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CUYUFv1,Seating/price tier of: CBJ V. MINNESOTA WILD
+17AYv0G6249IvS0,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdpXRsO,Seating/price tier of: Eagles Live at Sphere
+vvG1YZ_6XAEfp1,EXCLUDE,ticket_tier_duplicate,vvG1YZ_6mc3yqf,Seating/price tier of: Billy Strings
+17AYv0G6249IoSJ,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdbGZR6,Seating/price tier of: Eagles Live at Sphere
+vv1AAZkfAGkdi2IbK,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMfjiPU,Seating/price tier of: CBJ V. MONTREAL CANADIENS
+G5diZ_KdC9tpK,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksz7on,Seating/price tier of: New York Rangers vs. Columbus Blue Jackets
+vvG1YZ_2UXKh56,EXCLUDE,ticket_tier_duplicate,vvG1YZ_2UYSy0p,Seating/price tier of: USLBM Coast to Coast Challenge
+vv1AAZkfAGkdi2zb_,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CUYMbv9,Seating/price tier of: CBJ V. CAROLINA HURRICANES
+vvG1YZ_2MdKhUf,EXCLUDE,ticket_tier_duplicate,vvG1YZ_Cn4lA0M,Seating/price tier of: Pentatonix: Christmas in the City Tour
+vv1AAZkfAGkdi8Fbx,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMfqiJA,Seating/price tier of: CBJ V. SEATTLE KRAKEN
+G5diZ_KdC9yp9,EXCLUDE,ticket_tier_duplicate,G5diZ_2kszfoc,Seating/price tier of: New York Rangers vs. Nashville Predators
+vv1AAZkfAGkdi8bbl,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMfrHJ0,Seating/price tier of: CBJ V. LOS ANGELES KINGS
+G5diZ_KdCb_pj,EXCLUDE,ticket_tier_duplicate,G5diZ_2kszfoR,Seating/price tier of: New York Rangers vs. New Jersey Devils
+vv1AAZkfAGkdi8zbS,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CM9Nqvk,Seating/price tier of: CBJ V. MONTREAL CANADIENS
+G5vzZ_2KruT3F,EXCLUDE,ticket_tier_duplicate,G5vzZ_6O7adqy,Seating/price tier of: Denver Broncos vs. Buffalo Bills
+1kAYvPA_GA1e2P4,EXCLUDE,ticket_tier_duplicate,17AYv0G62TQWIR3,Seating/price tier of: Backstreet Boys: Into The Millennium
+1kAYvPA_GA1eRPO,EXCLUDE,ticket_tier_duplicate,17AYv0G62TQTbRy,Seating/price tier of: Backstreet Boys: Into The Millennium
+vv1AAZkfAGkdioFbD,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMjLuL2,Seating/price tier of: CBJ V. EDMONTON OILERS
+1AvjZ_4Gktoxvx-,EXCLUDE,ticket_tier_duplicate,17AYv0G62ThvzYN,Seating/price tier of: Backstreet Boys: Into The Millennium
+G5diZ_KdCbtpO,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksz0ow,Seating/price tier of: New York Rangers vs. Detroit Red Wings
+1kAYvPA_GA1d2PP,EXCLUDE,ticket_tier_duplicate,17AYv0G62Th2Fwx,Seating/price tier of: Backstreet Boys: Into The Millennium
+vv1AAZkfAGkdiob_k,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CM90qvG,Seating/price tier of: CBJ V. WASHINGTON CAPITALS
+vvG1YZ_FI2CT0R,EXCLUDE,ticket_tier_duplicate,vvG1YZ_Fn9YzIz,Seating/price tier of: Flatland Cavalry: Work of Heart Tour
+1kAYvPA_GA1dRPl,EXCLUDE,ticket_tier_duplicate,17AYv0G62ThoIS9,Seating/price tier of: Backstreet Boys: Into The Millennium
+1kAYvPA_GA1dTPm,EXCLUDE,ticket_tier_duplicate,17AYv0G62Th3ISS,Seating/price tier of: Backstreet Boys: Into The Millennium
+vv1AAZkfAGkdioz_C,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CM9hGTJ,Seating/price tier of: CBJ V. BOSTON BRUINS
+G5diZ_KdCbypN,EXCLUDE,ticket_tier_duplicate,G5diZ_2kszVog,Seating/price tier of: New York Rangers vs. Columbus Blue Jackets
+vv1AAZkfAGkdi3F__,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMQLq3V,Seating/price tier of: CBJ V. NEW YORK RANGERS
+G5diZ_KdC__pE,EXCLUDE,ticket_tier_duplicate,G5diZ_2kszVoy,Seating/price tier of: New York Rangers vs. Chicago Blackhawks
+1A9Zk4xGkdG4qCU,EXCLUDE,ticket_tier_duplicate,1A9Zk4eGkdcMDNS,Seating/price tier of: Eagles Live at Sphere
+vv1AAZkfAGkdi3b_0,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CM9jjTY,Seating/price tier of: CBJ V. BUFFALO SABRES
+1A9Zk4xGkdG4cCy,EXCLUDE,ticket_tier_duplicate,1A9Zk4eGkdmAhP8,Seating/price tier of: Eagles Live at Sphere
+1A9ZkfoGkdZ0OcW,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdpXRs0,Seating/price tier of: Eagles Live at Sphere
+1A9ZkfoGkdZPZm3,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdpXTsJ,Seating/price tier of: Eagles Live at Sphere
+G5diZ_KdC_tpn,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksy7oH,Seating/price tier of: New York Rangers vs. Boston Bruins
+G5diZ_KdC_ypm,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksyfoX,Seating/price tier of: New York Rangers vs. Dallas Stars
+G5diZ_KdCQ_ps,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksy03Z,Seating/price tier of: New York Rangers vs. Philadelphia Flyers
+vv1AAZkfAGkdi3I_I,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMfoH0e,Seating/price tier of: CBJ V. CALGARY FLAMES
+1A9ZkfoGkdZPOmO,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdpXTsi,Seating/price tier of: Eagles Live at Sphere
+1A9ZkfoGkdZPYmT,EXCLUDE,ticket_tier_duplicate,1A9Zk3dGkdpT2sm,Seating/price tier of: Eagles Live at Sphere
+vv1AAZkfAGkdiKF_c,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CM9qiTD,Seating/price tier of: CBJ V. ANAHEIM DUCKS
+G5diZ_KdCQtpg,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksy037,Seating/price tier of: New York Rangers vs. Seattle Kraken
+G5diZ_KdCQypz,EXCLUDE,ticket_tier_duplicate,G5diZ_2ksyV3k,Seating/price tier of: New York Rangers vs. Florida Panthers
+1FAYv0qaGZZ78FuF,EXCLUDE,ticket_tier_duplicate,1FAYv0b_Z4Z7GGvk,Seating/price tier of: Metallica: Life Burns Faster
+vv1AAZkfAGkdiKb_y,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CUYl9Tf,Seating/price tier of: CBJ V. WINNIPEG JETS
+1FAYv0qaGvZ78FCC,EXCLUDE,ticket_tier_duplicate,16vjZ_kk3G7nDXr,Seating/price tier of: Metallica: Life Burns Faster
+vv1AAZkfAGkdiKI_T,EXCLUDE,ticket_tier_duplicate,vvG1fZ_CMQOcKZ,Seating/price tier of: CBJ V. DETROIT RED WINGS
+17AYv0G61pKg52u,KEEP,f1_race_day_kept,,Kept as the single listing representing this Las Vegas Grand Prix race day
+17AYv0G61pKgD20,KEEP,f1_race_day_kept,,Kept as the single listing representing this Las Vegas Grand Prix race day
+17AYv0G61pKU52I,KEEP,f1_race_day_kept,,Kept as the single listing representing this Las Vegas Grand Prix race day
+rZ7HnEZ1AfGdA7,KEEP,kept_copy,,Same Deante' Hitchcock show; one listing leads with the support act
+G5vYZ_fD80sy7,KEEP,kept_copy,,Same show; one copy has a MOVED TO note in the name
+rZ7HnEZ1A4vf8N,KEEP,kept_copy,,Identical listing twice
+rZ7HnEZ1AfazQf,KEEP,kept_copy,,Same Bluebird on 3rd show; kept the listing with the lineup
+vv1AaZk4pGkdxZNvo,KEEP,kept_copy,,Same show listed twice with MOVED TO wording
+rZ7HnEZ1AfazbV,KEEP,kept_copy,,Same Bluebird on 3rd show; kept the listing with the lineup
+rZ7HnEZ1AfGdFf,KEEP,kept_copy,,Same Deante' Hitchcock show; one listing leads with the support act
+rZ7HnEZ1Af8dFV,KEEP,kept_copy,,Same listing; kept onsale copy over cancelled copy
+rZ7HnEZ1AfazQ7,KEEP,kept_copy,,Same Bluebird on 3rd show; kept the listing with the lineup
+LvZ18QmIWieWX0qEpiAIl,KEEP,kept_copy,,Same NYE Reggaefest; kept onsale copy
+Z7r9jZ1A70tod,KEEP,kept_copy,,Kept the cleaner listing of the NY Philharmonic concert
+G5vzZ_aeOqyaj,KEEP,pass_no_base,,"No individual-day listings exist, so this pass is the only record of the event"
+G5vzZ_ae-L_oS,KEEP,pass_no_base,,"No individual-day listings exist, so this pass is the only record of the event"
+vvG1iZ_8nDk6Ga,KEEP,tier_no_base,,"Tier listing but no regular listing exists, so it is the only record of this event"
+vvG1iZ_8nD66GG,KEEP,tier_no_base,,"Tier listing but no regular listing exists, so it is the only record of this event"
