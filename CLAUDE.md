@@ -107,11 +107,39 @@ them, and never print or commit API keys.
 
 ## Working Dataset
 
-The approved working dataset for the database is collection run
-**`2026-11-10_222442`**. Every working file name ends with this run stamp.
-Verified counts (header row excluded):
+The working dataset for the database is the **reduced scope** Nathan and Nick
+decided on 2026-11-11 (see `docs/project_decisions.md`). It is built from
+collection run **`2026-11-10_222442`** by `scripts/build_working_dataset.py`.
+The script writes to `data/processed/working_2026-11-10_222442/` and logs to
+`logs/build_working_2026-11-10_222442.log`. The CSVs are shared separately
+and are not in Git.
 
-| File in `data/processed/` | Rows | Columns | One row per |
+Verified counts (2026-11-11, header row excluded):
+
+| File in `data/processed/working_2026-11-10_222442/` | Rows | Columns | One row per |
+|---|---|---|---|
+| `working_events.csv` | 11,286 | 13 | Ticketmaster event ID |
+| `working_venues.csv` | 1,012 | 9 | Ticketmaster venue ID |
+| `working_acs1_2025_metros.csv` | 24 | 8 | Metro area (`metro_area_geoid`) |
+| `working_cbp2023_metros.csv` | 72 | 8 | Metro area + `naics_code` (711310, 711320, 7112) |
+| `market_labels.csv` | 24 | 3 | Metro area: official Census name and short market label |
+| `working_excluded_events.csv` | 157 | 5 | Event removed by the scope (`exclusion_reason`) |
+
+Scope in brief:
+- **Markets:** 24 Census metro areas, with each event assigned by its venue's
+  metro. Dallas-Fort Worth is one market.
+- **Events:** Music and Sports, plus 9 events in Ticketmaster's
+  Miscellaneous or Undefined segments.
+- **Exclusions:**
+  - 85 ticket packages that duplicate a regular listing;
+  - 69 events outside the 24 metros;
+  - 3 non-event listings.
+- **Census context:** ACS 2025 1-year and CBP 2023, at metro level only.
+
+The working files are filtered from these **source files** in
+`data/processed/` (full collection, kept unchanged):
+
+| Source file | Rows | Columns | One row per |
 |---|---|---|---|
 | `ticketmaster_events_2026-11-10_222442.csv` | 11,443 | 91 | Ticketmaster event ID |
 | `ticketmaster_excluded_2026-11-10_222442.csv` | 645 | 92 | Excluded non-event listing (`exclusion_reason`) |
@@ -120,6 +148,9 @@ Verified counts (header row excluded):
 | `census_acs5_2024_2026-11-10_222442.csv` | 129,646 | 12 | Geography (`geo_level` + `geoid`) |
 | `census_cbp2023_2026-11-10_222442.csv` | 7,302 | 12 | Geography + `naics_code` |
 | `search_area_tracts_2026-11-10_222442.csv` | 22,088 | 9 | Search area + tract |
+
+`census_acs5_2024` and `search_area_tracts` are kept for documentation only
+(e.g. how much of each metro the 25-mile searches covered).
 
 Other files in `data/processed/` and `data/raw/` are **not** part of the
 working dataset:
@@ -139,21 +170,31 @@ Raw sources for the working run:
 Logs for the run are in `logs/`, named `*_2026-11-10_222442.log`.
 
 Facts to keep in mind when working with these files (details in
-`docs/data_sources.md`):
-- **Prices:** they are Ticketmaster *listed* price ranges, not verified face
-  value. Only about 23% of events have one. Missing prices are blank.
-- **Search areas:** a search area (`search_cities`) is a 25-mile circle,
-  not city limits. Use the geocoded identifiers in `venues_geocoded` for
-  real geography.
-- **Census IDs** have leading zeros and must be read as text.
-  - In the ACS files the same `geoid` can appear at different `geo_level`s.
-  - Unpublished CBP cells (`published = False`) mean 0–2 establishments,
-    not zero.
-- **Multi-value cells:** some event columns hold several values joined with
-  ` | ` (performers, genres, promoters, presales, add-ons, DMAs, search
-  cities). The performer columns line up by position.
-- **Review flags:** 17 events carry `review_attraction_admission`. They are
-  kept, pending the team's decision.
+`docs/data_sources.md` and `docs/project_decisions.md`):
+- **IDs as text:** Census IDs and ZIP codes have leading zeros and must be
+  read as text.
+- **Missing values** stay blank, never zero:
+  - `local_time` is blank for 279 events (time TBA or no specific time);
+  - `genre` is blank for the 9 Miscellaneous/Undefined-segment events;
+  - `subgenre` is kept for Sports only;
+  - El Paso's CBP 711320 cell is unpublished (`published = False`, meaning
+    0–2 establishments).
+- **Placeholder labels:** genres "Other", "Undefined" and "Miscellaneous"
+  are kept as Ticketmaster labels.
+- **Belmont Park:** its 15 general-admission racing days are kept as live
+  sporting events.
+- **Search areas vs metros:** the source files' `search_cities` field is a
+  25-mile circle, not city limits. The working files use the geocoded venue
+  metro instead.
+- **Prices** (source files only) are Ticketmaster *listed* price ranges, not
+  verified face value. Pricing is not in the working scope.
+- **Multi-value cells** (performers, promoters, presales, add-ons, DMAs)
+  exist only in the source files. The working files have none, but 68
+  event names contain " | " as part of the name itself (e.g. "Another
+  Daughter | BESO | Shelby Ko").
+- **Package listing kept:** one ticket package is kept, "Gretchen Wilson |
+  Official Rio Ticket + Hotel Packages", because it is the only listing of
+  that concert.
 
 ## How the Data Was Produced
 
@@ -326,3 +367,23 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
   - 2,380 CBP rows are suppressed.
   - Event statuses include 162 cancelled, 89 rescheduled, and 363 offsale (docs/data_sources.md lists 362 because it counts only Music (211) and Sports (151); 1 more offsale event has segment "Miscellaneous").
 - Next step: Nathan and I decide what data to trim, then begin normalization and the ERD.
+
+### 2026-11-11 — Nathan Ho
+- Nathan and Nick agreed the reduced working scope. Every decision and reason is in `docs/project_decisions.md`.
+  - **Direction:** live-event activity (volume first, then variety via distinct event names and genre mix) across 24 Census metro markets, with ACS and CBP as context.
+  - **Pricing** dropped (coverage too uneven).
+- New `scripts/build_working_dataset.py` builds `data/processed/working_2026-11-10_222442/` (log: `logs/build_working_2026-11-10_222442.log`) from the processed CSVs. The 52 original raw/processed data files are unchanged (checksums verified).
+- **Markets:** events are assigned by venue metro. Dallas and Fort Worth are combined; San Francisco-Oakland and San Jose stay separate. 69 events outside the 24 metros are excluded.
+- **Events kept:** ID, name, URL, status, local date/time, segment and genre (names and IDs), Sports-only subgenre, venue ID, ticketing platform.
+  - Dropped: performers, promoters, pricing, sales and presales, and other ticketing and venue extras.
+- **Non-events excluded:**
+  - 85 ticket packages that duplicate a regular listing (hotel, Wizards VIP, PBR and Hondo multi-day, F1);
+  - an art-museum reception and an F1 afterparty package;
+  - a Zumba fitness class.
+
+  Kept: the 15 Belmont Park racing days and the Gretchen Wilson hotel-package listing (the only listing of that concert).
+- **Census:** ACS 2025 1-year and CBP 2023 (711310, 711320, 7112) at metro level. El Paso 711320 is unpublished and kept as missing. ACS 5-year and the search-area tracts are kept for documentation only.
+- **Final working counts:** 11,286 events (Music 8,981, Sports 2,296, Misc 6, Undefined 3), 1,012 venues, 24 markets, 24 ACS rows, 72 CBP rows, 157 excluded.
+  - All checks pass: no duplicate IDs, every event's venue and every venue's market exist, and working + excluded = 11,443 source events.
+- **Answer to Nick's question:** the 2026-11-02 (LA/NYC pilot) and 2026-11-05 (Census probe) files are superseded and not part of the working dataset.
+- Next step: Nathan sends Nick the working CSVs; then normalization and the ERD.
