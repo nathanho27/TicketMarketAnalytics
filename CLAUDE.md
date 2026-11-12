@@ -408,3 +408,12 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
 
 ### 2026-11-11 — Nick Silva
 - Local file note (Nick's machine only): the 6 pre-dedup working files were moved from '../processed copy' to '../processed copy/Archive'. Current files are in '../processed copy/working_dedup_v2'. If the dedup step ever needs to be re-run on Nick's machine, use: python3 scripts/apply_dedup_decisions.py --input-dir '../processed copy/Archive' --output-dir '../processed copy/working_dedup_v2'. Nathan's setup is unaffected.
+
+### 2026-11-11 — Nick Silva (end of session / stopping point)
+- Status: data cleanup is complete. Current working files are in working_dedup_v2 (11,119 events, 1,006 venues, 324 excluded, 24 markets). Dedup committed in 9a24429; archive note in 11f5028.
+- Waiting on: Nathan to run apply_dedup_decisions.py and confirm his counts match (11,119 / 1,006 / 324, "Problems: none"), then log it here.
+- Next session starts with:
+  1. git pull, then check whether Nathan logged his reproduction run.
+  2. Brainstorm business questions together (Nick and Nathan write them; Claude can only check whether the data can answer them, per the AI policy).
+  3. Then the ERD process: business rules → entities and relationships → ERD → primary keys → normalization.
+- Deadline: Phase 2 ERD due Nov 19.
