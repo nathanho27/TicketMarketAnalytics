@@ -405,3 +405,6 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
 - **New counts:** 11,119 events, 324 excluded, 1,006 venues; ACS (24), CBP (72) and market labels (24) unchanged. All checks pass.
 - Nathan: to get the same files, run the script with `--input-dir data/processed/working_2026-11-10_222442`.
 - Next step: business questions, description of operations and business rules, then entities, ERD, primary keys and normalization (ERD due Nov 19).
+
+### 2026-11-11 — Nick Silva
+- Local file note (Nick's machine only): the 6 pre-dedup working files were moved from '../processed copy' to '../processed copy/Archive'. Current files are in '../processed copy/working_dedup_v2'. If the dedup step ever needs to be re-run on Nick's machine, use: python3 scripts/apply_dedup_decisions.py --input-dir '../processed copy/Archive' --output-dir '../processed copy/working_dedup_v2'. Nathan's setup is unaffected.
