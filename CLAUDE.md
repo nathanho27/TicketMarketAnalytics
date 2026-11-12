@@ -417,3 +417,17 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
   2. Brainstorm business questions together (Nick and Nathan write them; Claude can only check whether the data can answer them, per the AI policy).
   3. Then the ERD process: business rules → entities and relationships → ERD → primary keys → normalization.
 - Deadline: Phase 2 ERD due Nov 19.
+
+### 2026-11-11 — Nathan Ho
+- Pulled Nick's commits 9a24429, 11f5028 and 470f7e1 (clean fast-forward, no conflicts) and reproduced the dedup output on my machine.
+  - Command: `python3 scripts/apply_dedup_decisions.py --input-dir data/processed/working_2026-11-10_222442`.
+  - Output: `data/processed/working_2026-11-10_222442/working_dedup_v2/`.
+- Result matches Nick's run:
+  - the log ends with "Problems: none";
+  - 11,119 events, 1,006 venues, 324 excluded, with ACS (24), CBP (72) and market labels (24) unchanged.
+- Extra checks:
+  - Las Vegas has 944 events and 62 venues;
+  - 110 excluded rows reference venues not in the venues file;
+  - the events file is the input minus exactly the 167 EXCLUDE rows, with other rows identical;
+  - the three copied files are identical to the input.
+- The input working files, `scripts/build_working_dataset.py` and `docs/dedup_decisions.csv` are unchanged (checksums before and after match).
