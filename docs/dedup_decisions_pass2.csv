@@ -1,0 +1,222 @@
+event_id,action,reason,duplicate_of_event_id,note
+15e0Z_3GYjoAw,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGdC7,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+16v0Z_6qkG7iZgL,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7-Sox,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+17A8v0G6uD0rzAr,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7PUQo,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+17FOv0G62U8RszD,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAZ3FU,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+17k8v0G613JmFn4,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A708xF,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+1A_Zk4eGkd_2GSh,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAe9FA,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+1AeFZ_4GkmS-dt6,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AA7tbd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+1Av0Z_oGkshLxGs,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAva0-,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+1AxZkoSGkenEPq1,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7-sOt,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+1FGZv0fvpdZ75GF7,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7-6aw,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+1ae0Z_pG_-ZZd5AG,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af8Yv0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_2pp49FJ,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAZdCo,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_3NN_RfG,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAvNAV,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_3Nx9Ruh,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAvNAS,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_55_THx_,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A70I8v,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_6LO3jjl,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7-VZ7,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_GEgUg1V,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7PKPA,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_GPnEdkb,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7P3__,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5dIZ_oq7YQJw,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAv7F6,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5ezZ_1Y6-wMN,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A70OuV,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5ezZ_8Bwxd_D,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAZwb_,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5vYZ_50UZ11w,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A70gaP,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5viZ_1K0spSd,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A70oap,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5viZ_3z70VLg,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAvsvZ,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5viZ_894PXxA,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAZ9fo,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5viZ_89ptCtn,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7JoxK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+G5viZ_okueAZ7,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAZV4N,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7-Ix9,EXCLUDE,cross_listed_duplicate,G5dIZ_6ep4plg,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7-V03,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afrp8N,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7-VxZ,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfOdvN,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A703O9,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfxpAK,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A706kF,EXCLUDE,cross_listed_duplicate,G5ezZ_aVCzaqI,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A706kk,EXCLUDE,cross_listed_duplicate,G5ezZ_aVC7ajD,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A709f9,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af06AK,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A70F-s,EXCLUDE,cross_listed_duplicate,G5eVZ_1kMgmBF,Same event listed under another venue ID; tie-break: alphabetically first event ID
+Z7r9jZ1A70_4I,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af-bqK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A70_bb,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af0a_d,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A70_oM,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af0d8S,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A70_oV,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af08Jd,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A70ga_,EXCLUDE,cross_listed_duplicate,G5dIZ_50TkeUI,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A70t3k,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af0-vd,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A70tjx,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af0POS,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A70tr6,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af0bjN,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A70y7A,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afr70S,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7J3At,EXCLUDE,cross_listed_duplicate,G5vzZ_CB-JIvf,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7J7AP,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFg_7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7JAbz,EXCLUDE,cross_listed_duplicate,vvG1fZ_unbcQ63,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7JF_-,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFM00,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_3,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFMf0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_4,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFMO0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_8,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFMb0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_9,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFzvf,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_F,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfPMod,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7JF_K,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFz7f,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_O,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFMff,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF__,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFMO7,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_a,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFM-f,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_b,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFzv0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_f,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFM40,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_o,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFM-V,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_p,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFMJf,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JF_x,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFMq7,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7J_4J,EXCLUDE,cross_listed_duplicate,17AYv0G62kNgqgL,Same event listed under another venue ID; kept copy's venue has an address
+Z7r9jZ1A7JeOw,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFM87,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7JoOa,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af0Urd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7P04V,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfJAoS,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7P407,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfPVvd,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7P7Ak,EXCLUDE,cross_listed_duplicate,G5vzZ_G56wTgG,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7P883,EXCLUDE,cross_listed_duplicate,vvG1YZ_GxVTFH9,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7P88F,EXCLUDE,cross_listed_duplicate,vvG18Z_GxVpIrr,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7PIGP,EXCLUDE,cross_listed_duplicate,G5viZ_uhLmhzd,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7PIfI,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFva0,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7POJv,EXCLUDE,cross_listed_duplicate,G5viZ_GHw7_t5,Same event listed under another venue ID; tie-break: alphabetically first event ID
+Z7r9jZ1A7POfI,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfJFoK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7POoA,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfxfPd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7POok,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfPz8d,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7PUjF,EXCLUDE,cross_listed_duplicate,17A8v0G6uDE0FKE,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7P_fw,EXCLUDE,cross_listed_duplicate,17AYv0G6GXeGP48,Same event listed under another venue ID; kept copy's venue has an address
+Z7r9jZ1A7Pf8b,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfJZ3K,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7Pwfx,EXCLUDE,cross_listed_duplicate,G5vzZ_uEZLLxE,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7Pwfy,EXCLUDE,cross_listed_duplicate,17k8v0G6uJzS9E8,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7q4o6,EXCLUDE,cross_listed_duplicate,1AvjZbVGkT_11mj,Same event listed under another venue ID; kept copy's venue has an address
+Z7r9jZ1A7q4ok,EXCLUDE,cross_listed_duplicate,1AvjZbVGkTbMBmF,Same event listed under another venue ID; kept copy's venue has an address
+Z7r9jZ1A7qwF8,EXCLUDE,cross_listed_duplicate,vvG1iZ_8nD66GG,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7qwFa,EXCLUDE,cross_listed_duplicate,vvG1iZ_8nDk6Ga,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7x9Pt,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af-fkK,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1A7xbPg,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af-paK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7xvj-,EXCLUDE,cross_listed_duplicate,G5dIZ_49maAl4,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7-pe,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfCoj7,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AA73vN,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfuEp7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA768V,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFaa0,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA76_J,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfueO0,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA76o3,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFaa7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA76o6,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFvfV,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA76o8,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afuff0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AA76oa,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfJK_K,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA78A9,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4vZvK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AA7K0I,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGOof,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AA7KQA,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afuso0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AA7MOw,EXCLUDE,cross_listed_duplicate,1A9Zk4NGkesg_oG,Same event listed under another venue ID; kept copy's venue has an address
+Z7r9jZ1AA7N09,EXCLUDE,cross_listed_duplicate,k7vGF_4Q0Qb2g,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7Nbg,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfCoGf,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7O8K,EXCLUDE,cross_listed_duplicate,vv1A6Zk4fGkd_mFu1,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7PAA,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfCoQ7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7Y13,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfCp0f,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7ZoY,EXCLUDE,cross_listed_duplicate,1AtZk4kGkdXJYO3,Confirmed in manual review; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7_-A,EXCLUDE,cross_listed_duplicate,vv1AAZk4fGkec1Uae,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7grd,EXCLUDE,cross_listed_duplicate,1AvjZ_4GkXLzIEv,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7p-E,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afuar7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AA7svU,EXCLUDE,cross_listed_duplicate,1Ae0Z_4GkSzXOE-,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAAeFI,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfCdPf,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZ48s,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAqN,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAZ48w,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAjN,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAZ4pF,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af0o_d,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZ6jS,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfFV_7,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAZ7FJ,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afax07,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAZ7_J,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afa-0f,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZ8aN,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfagF7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZFkA,EXCLUDE,cross_listed_duplicate,G5viZ_2x6z9_9,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZIv3,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZEvS,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZJF9,EXCLUDE,cross_listed_duplicate,G5vzZ_8I5_G1r,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZJF_,EXCLUDE,cross_listed_duplicate,G5dIZ_8I_WSrC,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZJFp,EXCLUDE,cross_listed_duplicate,1AvjZ_8GklHSoV0,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZK4V,EXCLUDE,cross_listed_duplicate,vv1AAZkfdGkd6wmz3,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZO8t,EXCLUDE,cross_listed_duplicate,G5vzZ_890iVPs,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZYvM,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afa8af,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZYvz,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afa8FV,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZ_v4,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4Z8rd,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZdu6,EXCLUDE,cross_listed_duplicate,vvG1fZ_2p_TpBy,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAZf7z,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfaSPV,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAZvFy,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Afa0xf,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAe6Q8,EXCLUDE,cross_listed_duplicate,1A9ZkfyGkeBivWr,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAe87V,EXCLUDE,cross_listed_duplicate,k7vGF_KYftaAS,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAeAay,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGyOf,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAeZCk,EXCLUDE,cross_listed_duplicate,vv1A6ZkfgGkd0zk8g,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAeb7A,EXCLUDE,cross_listed_duplicate,vv1AAZk4fGkeiPU66,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAekbO,EXCLUDE,cross_listed_duplicate,G5viZ_KJvkpSj,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAevb0,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfF7af,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAv47F,EXCLUDE,cross_listed_duplicate,G5vzZ_36tuCwv,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAv4x4,EXCLUDE,cross_listed_duplicate,1AtZkfxGkdJ_OSP,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAv4xf,EXCLUDE,cross_listed_duplicate,1AtZkfxGkdJ_OSC,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAv9-_,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAuN,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAv94Z,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af1b80,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvExA,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGK47,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvFPF,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4veZd,Confirmed in manual review; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvIQ7,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGZv0,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvIQe,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGZ7f,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvIqp,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG9ff,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvIqz,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfF__V,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvJeK,EXCLUDE,cross_listed_duplicate,G5vzZ_3niiz9S,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvNZS,EXCLUDE,cross_listed_duplicate,G5ezZ_3NvH0B6,Same event listed under another venue ID; tie-break: alphabetically first event ID
+Z7r9jZ1AAvPbs,EXCLUDE,cross_listed_duplicate,G5dIZ_3nFHkQ9,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvS-Y,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG8_7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvUAO,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGoO0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvV-M,EXCLUDE,cross_listed_duplicate,1AtZkfsGkdhCsax,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvZ1_,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAuS,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ1b,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZACK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ1f,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZA1d,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvZ1p,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAaN,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvZCp,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4vkrd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZGZ,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZA8K,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_0,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZA8d,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_4,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAjS,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_9,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAqS,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_K,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAaS,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvZ_N,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAGS,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_P,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZACd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ__,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZArd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_b,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAjK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_f,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAqK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvZ_p,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZAOd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvdAS,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4Z6_K,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvdAV,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4Z6_d,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvdAw,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4Z6_S,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvdPa,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af-MbS,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAveAK,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1A4ZArK,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvp4J,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af06vd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvs89,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG-e7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvs8M,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG-vf,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvs8U,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG-vV,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvs8_,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG-Z0,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvs8b,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG-v7,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvs8p,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfG-ZV,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvseK,EXCLUDE,cross_listed_duplicate,vv178Z_3GkzgZ45G,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+Z7r9jZ1AAvvek,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfF_v0,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvz_F,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGpqV,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAvzre,EXCLUDE,cross_listed_duplicate,G5vzZ_KpRJzTa,Same event listed under another venue ID; tie-break: alphabetically first event ID
+rZ7HnEZ1A4ZU8d,EXCLUDE,cross_listed_duplicate,k7vGF_8mXYofV,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1A4Zg0d,EXCLUDE,cross_listed_duplicate,vvG1IZ_8UcGuAM,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1A4ZgJK,EXCLUDE,cross_listed_duplicate,vvG1IZ_8BZkE9i,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1Af1o-f,EXCLUDE,cross_listed_duplicate,1Ae0Z_oGkiaN-ZW,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1Af1oq7,EXCLUDE,cross_listed_duplicate,k7vGF_owyYSlh,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1AfF68V,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7PJjg,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1AfFvA7,EXCLUDE,cross_listed_duplicate,k7vGF_GnRK-9d,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1AfG6Of,EXCLUDE,cross_listed_duplicate,k7vGF_3kHBoLo,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1AfG6of,EXCLUDE,cross_listed_duplicate,vvG1IZ_3JCrgRz,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1AfGy-0,EXCLUDE,cross_listed_duplicate,vvG1IZ_KE3jQuu,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1AfGy07,EXCLUDE,cross_listed_duplicate,vvG1IZ_KJ-9Xi3,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+rZ7HnEZ1AfJv7d,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7P0bp,Same event listed under another venue ID; tie-break: alphabetically first event ID
+vv166ZkfYJ9ZAu7C77,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAvS7v,Same event listed under another venue ID; tie-break: alphabetically first event ID
+vv17FZ_3GkiOHZrg,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1AfGxa0,Same event listed under another venue ID; kept copy has a real genre (other copy blank or placeholder)
+vv17fZ_6GkXOoUqA,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A70o_P,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vv17fZ_oGkmYBznK,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAvFAx,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vv17jZ_oGkY_aQRE,EXCLUDE,cross_listed_duplicate,rZ7HnEZ1Af1oq0,Same event listed under another venue ID; tie-break: alphabetically first event ID
+vv1A6ZkfgGkdPpUKy,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAeZ8s,Same event listed under another venue ID; tie-break: alphabetically first event ID
+vv1AAZk40GkeiiUoo,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AA7yJZ,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vv1AAZk4fGkecrp1f,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AA7KaN,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vv1AAZkfMGkdck8DI,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAe7Fd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vv1kvYvPGaGA17SMQ,EXCLUDE,cross_listed_duplicate,Z7r9jZ1AAvS7d,Same event listed under another venue ID; tie-break: alphabetically first event ID
+vvG18Z_5P8e-GF,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A70gaN,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vvG18Z_GHSkTrT,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7POJd,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vvG1fZ_un9pyUZ,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7PwJ4,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+vvG1fZ_un_yn_-,EXCLUDE,cross_listed_duplicate,Z7r9jZ1A7PFua,"Same event listed under another venue ID; kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1A7P48Y,EXCLUDE,cross_listed_probable_duplicate,Z7r9jZ1AAvsA0,Probable duplicate (room differs); kept copy's venue has an address
+Z7r9jZ1AAvYoS,EXCLUDE,cross_listed_probable_duplicate,Z7r9jZ1AA7-Ck,"Probable duplicate (room differs); kept copy is at the venue ID with more events (retention rule only, not a genre-accuracy claim)"
+Z7r9jZ1AAv0_3,KEEP,unresolved_manual_review,,"Possible duplicate of rZ7HnEZ1Af19J7, but the venues appear to be different rooms; both kept pending manual review"
+rZ7HnEZ1Af19J7,KEEP,unresolved_manual_review,,"Possible duplicate of Z7r9jZ1AAv0_3, but the venues appear to be different rooms; both kept pending manual review"
+Z7r9jZ1AAvZ14,KEEP,unresolved_status_conflict,,"Possible cross-listing of rZ7HnEZ1A4ZAGK, but statuses differ; both copies kept pending manual review"
+k7vGF_u6tY3e5,KEEP,unresolved_status_conflict,,"Possible cross-listing of rZ7HnEZ1AfuzGV, but statuses differ; both copies kept pending manual review"
+rZ7HnEZ1A4ZAGK,KEEP,unresolved_status_conflict,,"Possible cross-listing of Z7r9jZ1AAvZ14, but statuses differ; both copies kept pending manual review"
+rZ7HnEZ1AfuzGV,KEEP,unresolved_status_conflict,,"Possible cross-listing of k7vGF_u6tY3e5, but statuses differ; both copies kept pending manual review"

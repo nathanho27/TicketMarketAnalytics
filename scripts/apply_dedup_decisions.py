@@ -21,6 +21,14 @@ Run from the project root:
     python scripts/apply_dedup_decisions.py --input-dir "../processed copy"
     python scripts/apply_dedup_decisions.py --input-dir DIR --decisions FILE --output-dir DIR
 Output defaults to <input-dir>/working_dedup_v2/.
+
+The script can be run again on its own output with a later decisions file.
+--expected-exclude must then match that file's EXCLUDE count (default 167,
+the count in docs/dedup_decisions.csv). Second pass (cross-listed events):
+    python scripts/apply_dedup_decisions.py \
+        --input-dir <...>/working_dedup_v2 \
+        --decisions docs/dedup_decisions_pass2.csv --expected-exclude 215 \
+        --output-dir <...>/working_dedup_v3
 """
 import argparse
 import logging
@@ -46,7 +54,7 @@ def read(path):
     return pd.read_csv(path, dtype=str, keep_default_na=False, na_values=[""])
 
 
-def apply(input_dir, decisions_path):
+def apply(input_dir, decisions_path, expected_exclude=EXPECTED_EXCLUDE):
     events, excluded = read(input_dir / EVENTS), read(input_dir / EXCLUDED)
     venues, decisions = read(input_dir / VENUES), read(decisions_path)
     log.info("Input: %d working events, %d excluded, %d venues, %d decisions",
@@ -67,8 +75,8 @@ def apply(input_dir, decisions_path):
     exclude = decisions[decisions["action"] == "EXCLUDE"]
     if decisions["reason"].isna().any():
         raise ValueError("Some decisions have no reason")
-    if len(exclude) != EXPECTED_EXCLUDE:
-        raise ValueError(f"Expected {EXPECTED_EXCLUDE} EXCLUDE decisions, found {len(exclude)}")
+    if len(exclude) != expected_exclude:
+        raise ValueError(f"Expected {expected_exclude} EXCLUDE decisions, found {len(exclude)}")
 
     # Every listing an excluded one duplicates must stay in working_events.
     refs = exclude["duplicate_of_event_id"].dropna().str.split(r"\s*\|\s*").explode()
@@ -133,6 +141,8 @@ def main():
     parser.add_argument("--input-dir", type=Path, required=True, help="Folder with the six working CSVs")
     parser.add_argument("--decisions", type=Path, default=DEFAULT_DECISIONS, help="Decisions CSV")
     parser.add_argument("--output-dir", type=Path, help="Defaults to <input-dir>/working_dedup_v2")
+    parser.add_argument("--expected-exclude", type=int, default=EXPECTED_EXCLUDE,
+                        help=f"EXCLUDE rows the decisions file must contain (default {EXPECTED_EXCLUDE})")
     args = parser.parse_args()
     input_dir = args.input_dir.resolve()
     output_dir = (args.output_dir or input_dir / "working_dedup_v2").resolve()
@@ -145,7 +155,7 @@ def main():
                                   logging.StreamHandler(sys.stdout)])
     log.info("Input folder: %s | decisions: %s | output folder: %s", input_dir, args.decisions, output_dir)
 
-    results = apply(input_dir, args.decisions)
+    results = apply(input_dir, args.decisions, args.expected_exclude)
     new_events, new_excluded, new_venues = results[:3]
     new_events.to_csv(output_dir / EVENTS, index=False)
     new_excluded.to_csv(output_dir / EXCLUDED, index=False)

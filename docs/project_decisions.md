@@ -213,6 +213,143 @@ Checks (script log plus a separate check by Nick's session):
 - the remaining venue rows and the three copied files are identical to the
   input, and the input files' checksums are unchanged.
 
+## 2026-11-18: Cross-listed event cleanup (second pass)
+
+Decided by Nathan and Nick (rule proposed in Nathan's session, five manual
+cases decided by Nathan, approved by Nick on 2026-11-18). Background: after
+the first pass, 230 pairs of working events had the same date, start time and
+a matching name but **different venue IDs**. Most were the same show sold on
+two platforms (ticketmaster.com plus TicketWeb, AXS and others), each under
+its own venue ID. No event appeared under more than two IDs.
+
+Classification of the 230 pairs:
+- 213 likely duplicates;
+- 12 clearly separate events (different rooms or acts), left alone;
+- 5 manual cases, decided by Nathan:
+  - Alexandra Kay, Colour Revolt: duplicates;
+  - Dwight Yoakam, Crankdat: **probable** duplicates (the room differs);
+  - Boy Golden (The Basement vs The Basement East): unresolved, since the
+    venues are different.
+
+Decisions are recorded per event in `docs/dedup_decisions_pass2.csv` (same
+five columns as `docs/dedup_decisions.csv`, no Ticketmaster fields; 221 rows:
+215 EXCLUDE, 6 KEEP).
+
+### Retention rule
+
+For each duplicate pair, the first step that applies decides which copy is
+kept. Ticketing platform is never used, because ticketmaster.com copies more
+often had placeholder genres.
+
+1. **Statuses differ:** no decision; both copies kept and flagged.
+2. **Genre quality:** keep the copy with a real genre (not blank, "Other",
+   "Undefined" or "Miscellaneous"). Decided 88 pairs.
+3. **Venue completeness:** keep the copy whose venue has an address. Decided 6.
+4. **Venue consolidation:** keep the copy at the venue ID with more events.
+   Decided 112. This is a consistent retention rule only; it makes **no claim**
+   that the larger venue ID's genre is more accurate.
+5. **Tie-break:** alphabetically first event ID. Decided 9.
+
+### Reason codes
+
+| Action | Reason code | Rows | Meaning |
+|---|---|---|---|
+| EXCLUDE | `cross_listed_duplicate` | 213 | Same event under another venue ID (211 likely, plus Alexandra Kay and Colour Revolt confirmed in manual review) |
+| EXCLUDE | `cross_listed_probable_duplicate` | 2 | Dwight Yoakam and Crankdat: probable duplicates, room differs |
+| KEEP | `unresolved_status_conflict` | 4 | The War And Treaty and Dee Dee Bridgewater: both copies kept because their statuses differ |
+| KEEP | `unresolved_manual_review` | 2 | Boy Golden: both copies kept pending manual review |
+
+### How it was applied
+
+`scripts/apply_dedup_decisions.py` was run a second time on the first pass's
+output. The hard-coded check of 167 EXCLUDE rows became an option,
+`--expected-exclude` (default still 167). No other logic changed.
+
+```bash
+.venv/bin/python scripts/apply_dedup_decisions.py \
+    --input-dir data/processed/working_2026-11-10_222442/working_dedup_v2 \
+    --decisions docs/dedup_decisions_pass2.csv --expected-exclude 215 \
+    --output-dir data/processed/working_2026-11-10_222442/working_dedup_v3
+```
+
+`working_dedup_v2/` is unchanged (checksums verified before and after).
+
+### Venues removed
+
+37 venue IDs had no events left and were dropped. 25 have a kept counterpart
+with the same name. 12 have a differently named counterpart; for 4 of these
+the name suggests a room or space within the same complex:
+- Ikeda Theatre → Mesa Arts Center;
+- Resorts World Las Vegas Event Center → The Theatre at Resorts World;
+- Williams Center → Williams Center Black Box;
+- PETCO Park → Gallagher Square at Petco Park.
+
+The full list is in `working_dedup_v3/apply_dedup_decisions.log`.
+
+### Resulting dataset (`working_dedup_v3/`, verified 2026-11-18)
+
+| File | Rows | Columns | Change |
+|---|---|---|---|
+| `working_events.csv` | 10,904 | 13 | 11,119 − 215 |
+| `working_excluded_events.csv` | 539 | 5 | 324 + 215 |
+| `working_venues.csv` | 969 | 9 | 1,006 − 37 |
+| `working_acs1_2025_metros.csv` | 24 | 8 | unchanged (copied) |
+| `working_cbp2023_metros.csv` | 72 | 8 | unchanged (copied) |
+| `market_labels.csv` | 24 | 3 | unchanged (copied) |
+
+Events by segment: Music 8,689, Sports 2,206, Miscellaneous 6, Undefined 3.
+Most removals by market: New York 57, San Diego 23, Nashville 19, Chicago 19,
+Phoenix 17, Las Vegas 14.
+
+Checks (script log, "Problems: none", plus a separate check in Nathan's
+session):
+- no duplicate event IDs, and no event ID in both the events and excluded files;
+- events + excluded = 11,443, the source event count;
+- the events file is the input minus exactly the 215, rows otherwise unchanged;
+- all 6 KEEP IDs are still in the events file;
+- every event's venue exists, every venue has at least one event, and every
+  venue's metro is one of the 24 markets;
+- the remaining venue rows and the three copied files are identical to the input.
+
+171 of the 539 excluded rows reference venues that are not in the venues file
+(the 110 from the first pass, plus excluded copies whose venue ID was dropped).
+
+### Limitations
+
+- **Genre disagreements (70 pairs):** both copies had a real but different
+  genre. The kept genre comes from the retention rule, not from a judgment of
+  accuracy. Most common pairs:
+  - Blues / Jazz: 24;
+  - Alternative / Rock: 14;
+  - Classical / Jazz: 7;
+  - Metal / Rock: 5;
+  - Latin / World: 3;
+  - Classical / Rock: 3.
+
+  Genre-mix results carry this uncertainty.
+- **Placeholder genres:** 3 kept copies have a placeholder genre (both copies
+  had one). Placeholder or blank genres overall went from 1,825 to 1,734.
+- **Probable duplicates:** 2 removals (Dwight Yoakam, Crankdat) are probable,
+  not certain.
+- **Unresolved pairs:** 3 pairs keep both copies (two status conflicts and
+  Boy Golden), so each may be counted twice.
+- **Support acts:** 5 kept event names omit a support act that appears in the
+  removed copy's name.
+- **Remaining duplicate venue IDs:** some physical venues still have more than
+  one venue ID where no event was cross-listed. The room-versus-venue question
+  (separate IDs for rooms in one building) is not resolved.
+- **Tier listings:** 33 event names match a tier, VIP or presale pattern
+  ("VIP Tickets", "Club Seating", "Premium Seating", "VIP Tailgate",
+  "Presale") and remain. Examples:
+  - Washington Capitals VIP Tickets;
+  - Paramount Theatre Club Seating;
+  - UCLA Premium Seating;
+  - Colts VIP Tailgate.
+- **ZIP codes:** 3 venue ZIP codes have stray spaces (`' 32210'`, `'90731 '`,
+  `'07506 '`).
+- **Venue text:** leading or trailing spaces appear in 12 venue names,
+  18 addresses and 2 cities.
+
 ## Open items
 
 - **Business questions:** not yet written. To be added here verbatim by

@@ -37,7 +37,7 @@ Nathan and Nick. **Both partners must participate in every phase.**
 
 | Phase | Due | Points | Requirements |
 |---|---|---|---|
-| Phase 2: ER diagram | November 19, 2026 | 25 | Must include all entities, attributes, primary keys, foreign keys, relationships, cardinalities, and proper normalization. |
+| Phase 2: ER diagram | November 22, 2026 (extended from November 19) | 25 | Must include all entities, attributes, primary keys, foreign keys, relationships, cardinalities, and proper normalization. |
 | Phase 3: Database creation and business questions | November 30, 2026 | 25 | Build and populate the MySQL database with at least 6 tables. Submit a 3–4 page report explaining how the dataset was converted into tables, actual import challenges and solutions, a complete data dictionary, and at least 6 business questions of varying complexity. |
 | Phase 4: SQL queries and visualizations | December 9, 2026 | 35 | Submit a `.sql` file and a visualization PDF. Queries should demonstrate joins, grouping, subqueries, and window functions. |
 | Phase 5: Video presentation | December 9, 2026 | 15 | Maximum 15 minutes, one business question per slide, business-focused insights, and no SQL on slides. |
@@ -126,6 +126,8 @@ Verified counts (2026-11-11, header row excluded):
 | `working_excluded_events.csv` | 157 | 5 | Event removed by the scope (`exclusion_reason`) |
 
 Updated 2026-11-11 by Nick: after the dedup step (scripts/apply_dedup_decisions.py), the current working files are in working_dedup_v2: 11,119 events, 1,006 venues, 324 excluded; ACS, CBP, and market labels unchanged. See docs/project_decisions.md.
+
+Updated 2026-11-18 by Nathan: the cross-listing pass (`docs/dedup_decisions_pass2.csv`) produced the **current working files** in `working_dedup_v3`: 10,904 events, 969 venues, 539 excluded; ACS (24), CBP (72) and market labels (24) unchanged. `working_dedup_v2` is kept unchanged. See "2026-11-18: Cross-listed event cleanup" in docs/project_decisions.md.
 
 Scope in brief:
 - **Markets:** 24 Census metro areas, with each event assigned by its venue's
@@ -431,3 +433,29 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
   - the events file is the input minus exactly the 167 EXCLUDE rows, with other rows identical;
   - the three copied files are identical to the input.
 - The input working files, `scripts/build_working_dataset.py` and `docs/dedup_decisions.csv` are unchanged (checksums before and after match).
+
+### 2026-11-18 — Nathan Ho
+- **Finished: cross-listed event cleanup (second dedup pass), approved by Nick.** Details, rule, reason codes, checks and limitations are in `docs/project_decisions.md` ("2026-11-18: Cross-listed event cleanup").
+  - **Problem:** 230 event pairs shared date, time and name under different venue IDs, mostly the same show sold on two platforms.
+  - **Result:** 215 copies removed (213 duplicates, 2 probable); 12 separate pairs left alone; 3 pairs unresolved with both copies kept (The War And Treaty and Dee Dee Bridgewater have status conflicts; Boy Golden is flagged for manual review).
+  - **Retention rule (platform-neutral):** status conflict → flag; then real genre; then venue has an address; then venue ID with more events (a consistency rule, not an accuracy claim); then lowest event ID.
+- **What changed:**
+  - New `docs/dedup_decisions_pass2.csv` (221 rows: 215 EXCLUDE, 6 KEEP; decision columns only, under the same exception as `docs/dedup_decisions.csv`).
+  - `scripts/apply_dedup_decisions.py` has a new `--expected-exclude` option (default 167), so it can run a second decisions file. No other logic changed.
+  - **New output:** `data/processed/working_2026-11-10_222442/working_dedup_v3/`.
+    - Counts: 10,904 events, 969 venues (37 emptied venue IDs dropped), 539 excluded; ACS, CBP and labels unchanged.
+    - Checks: "Problems: none"; no duplicate event IDs; every event's venue exists; events + excluded = 11,443.
+    - `working_dedup_v2` is unchanged.
+- **Limitations recorded:**
+  - 70 genre disagreements between copies;
+  - 2 probable duplicates and 3 unresolved pairs;
+  - 33 remaining tier/VIP/presale listings;
+  - duplicate venue IDs and the room-versus-venue question;
+  - ZIP and whitespace issues.
+- **Data cleaning is finished.** No further cleaning investigation before the ERD.
+- **Next steps (not done yet).** The ERD is due **Sunday, November 22**; we are building it together in **Lucidchart**.
+  1. Nick: pull, then get the `working_dedup_v3` files (sent by Nathan, or reproduce with `python3 scripts/apply_dedup_decisions.py --input-dir '../processed copy/working_dedup_v2' --decisions docs/dedup_decisions_pass2.csv --expected-exclude 215 --output-dir '../processed copy/working_dedup_v3'`). Check the counts: 10,904 / 969 / 539, "Problems: none".
+  2. Nathan and Nick finalize our **six business questions** and record them verbatim in `docs/project_decisions.md`.
+  3. Nathan and Nick decide the database **entities and relationships**.
+  4. Nathan and Nick build the **ERD together in Lucidchart**.
+  - Per the AI policy, the questions, entities, relationships, keys and diagram are our own work. AI only checks whether the data can answer a question.
