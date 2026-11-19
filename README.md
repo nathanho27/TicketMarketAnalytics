@@ -1,11 +1,15 @@
 # TicketMarketAnalytics
 
 TicketMarketAnalytics is a graduate SQL database project at UC Davis. It
-compares live-event markets across 25 major U.S. cities. The project combines
-Ticketmaster event listings with U.S. Census data to look at how event
-availability, listed ticket prices, venues, genres and promoter activity
-differ between cities, and how they relate to local population, income and
-the size of each area's live-event industry.
+compares live-event activity across 24 U.S. metro areas, built from searches
+around the 25 largest U.S. cities. The project combines Ticketmaster event
+listings with U.S. Census data to look at how event volume, venues and genre
+mix differ between metro areas, and how they relate to local population,
+income and the size of each area's live-event industry.
+
+The data was collected more broadly (25 city search areas, including listed
+prices and promoters). The team then narrowed it to a smaller working
+dataset for the database: see [Working dataset](#working-dataset) below.
 
 ## Data sources
 
@@ -21,6 +25,8 @@ also determine which census tracts fall inside each search area. Full source
 details are in [docs/data_sources.md](docs/data_sources.md).
 
 ## Dataset coverage
+
+Full collection (run `2026-11-10_222442`), before the working-dataset steps:
 
 - **11,443 events** (9,104 Music, 2,330 Sports, and 9 classified by
   Ticketmaster as Miscellaneous or Undefined), dated **November 12, 2026
@@ -61,6 +67,41 @@ details are in [docs/data_sources.md](docs/data_sources.md).
      are kept as "not published (0–2)" rather than zero.
 5. **Quality report.** A read-only report checks completeness, duplicates,
    missing values and Census coverage across all outputs.
+6. **Working dataset.** The full collection is narrowed to the scope used
+   for the database (see below), then cleaned of duplicate listings in two
+   passes. Each decision is recorded per event in a committed decisions file.
+
+## Working dataset
+
+The database is built from a reduced working dataset. The decisions and
+reasons are recorded in [docs/project_decisions.md](docs/project_decisions.md).
+
+- **Scope** (`scripts/build_working_dataset.py`):
+  - 24 Census metro areas, with each event assigned by its venue's metro;
+    Dallas and Fort Worth form one market.
+  - Music and Sports events, plus 9 Miscellaneous/Undefined events.
+  - Census context at metro level only: ACS 2025 1-year and CBP 2023
+    (NAICS 711310, 711320, 7112).
+  - Pricing, promoters, performers and sales fields are not in scope.
+- **Dedup pass 1** (`docs/dedup_decisions.csv`): removed ticket tiers,
+  multi-night passes, Grand Prix zone listings and repeated listings.
+- **Dedup pass 2** (`docs/dedup_decisions_pass2.csv`): removed copies of the
+  same event listed under two venue IDs on different ticketing platforms.
+
+Current working files (`working_dedup_v3`):
+
+| File | Rows | One row per |
+|---|---|---|
+| `working_events.csv` | 10,904 | Ticketmaster event |
+| `working_venues.csv` | 969 | Ticketmaster venue ID |
+| `market_labels.csv` | 24 | Metro area |
+| `working_acs1_2025_metros.csv` | 24 | Metro area |
+| `working_cbp2023_metros.csv` | 72 | Metro area and NAICS code |
+| `working_excluded_events.csv` | 539 | Listing removed by the scope or dedup steps, with the reason |
+
+Known limitations of the working data, such as genre disagreements between
+duplicate copies and a few unresolved pairs, are listed in
+[docs/project_decisions.md](docs/project_decisions.md).
 
 ## Repository structure
 
@@ -76,9 +117,17 @@ scripts/
   geocode_venues.py       Venue coordinates -> Census geographic identifiers
   collect_census.py       ACS, CBP and search-area tract data
   evaluate_collection.py  Data-quality report (read-only)
+  build_working_dataset.py   Full collection -> 24-metro working files
+  apply_dedup_decisions.py   Applies a dedup decisions file to the working files
+  extract_data_dictionary.py MySQL column metadata -> Markdown (read-only)
+  check_import_counts.py     MySQL row counts vs CSV row counts (read-only)
   probes/                 Earlier exploratory scripts, not part of the pipeline
 docs/
   data_sources.md         Sources, missing values, limitations, file inventory
+  project_decisions.md    Team decisions: working scope, dedup passes, limitations
+  dedup_decisions*.csv    Per-event dedup decisions (decision columns only)
+  database_build_log.md   Record of the MySQL build and import issues
+  data_dictionary_reference.md  Metadata extracted from the database
   phase1_guide.md         Notes from the LA/NYC pilot (column reference)
   ...                     Earlier research notes on data source options
 data/                     Local only (raw/ and processed/), not in the repository
@@ -117,6 +166,18 @@ output of the step before it.
 .venv/bin/python scripts/geocode_venues.py         # venues_geocoded CSV
 .venv/bin/python scripts/collect_census.py         # ACS, CBP and search-area tract CSVs
 .venv/bin/python scripts/evaluate_collection.py    # data-quality report (changes no files)
+```
+
+Then build the working dataset and apply both dedup passes. Each step writes
+a new folder and leaves its input unchanged:
+
+```bash
+.venv/bin/python scripts/build_working_dataset.py
+.venv/bin/python scripts/apply_dedup_decisions.py --input-dir data/processed/working_2026-11-10_222442
+.venv/bin/python scripts/apply_dedup_decisions.py \
+    --input-dir data/processed/working_2026-11-10_222442/working_dedup_v2 \
+    --decisions docs/dedup_decisions_pass2.csv --expected-exclude 215 \
+    --output-dir data/processed/working_2026-11-10_222442/working_dedup_v3
 ```
 
 What to expect:
@@ -189,7 +250,8 @@ upcoming events, so a new run collects a different snapshot.
 
 ## Project status
 
-Data collection and cleaning are complete. The cleaned dataset (run
-`2026-11-10_222442`) is the working version for the SQL phase of the
-project. The next step is designing the relational database, an ERD due
-November 19, 2026, and then loading this data into it for analysis.
+Data collection and cleaning are complete. The working files in
+`working_dedup_v3` (from run `2026-11-10_222442`) are the version used for
+the SQL phase of the project. The next step is designing the relational
+database (ERD due November 22, 2026), then loading this data into MySQL for
+analysis.

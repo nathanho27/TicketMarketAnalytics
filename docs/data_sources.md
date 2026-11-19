@@ -4,6 +4,13 @@ Final dataset for the Ticketmaster + Census project: 25 U.S. cities, events
 from Nov 12, 2026 to Jan 31, 2027. Run stamp: `2026-11-10_222442` (every
 output file name ends with it).
 
+This file describes the **full collection**. The database uses a smaller
+working dataset built from it: 24 Census metro areas, with no pricing,
+promoter or sales fields, and two duplicate-listing passes. The current
+files are in `data/processed/working_2026-11-10_222442/working_dedup_v3/`
+(10,904 events, 969 venues). Scope, dedup decisions and limitations are in
+[project_decisions.md](project_decisions.md).
+
 ## How to reproduce
 
 From the project folder, with `TICKETMASTER_API_KEY` and `CENSUS_API_KEY` in `.env`:
