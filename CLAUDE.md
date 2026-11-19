@@ -75,7 +75,7 @@ Nathan has set these rules for this project, in line with the AI policy:
   - creating or modifying documentation files;
   - changing the dataset.
 
-## Repository Map (verified 2026-11-11)
+## Repository Map (verified 2026-11-18)
 
 ```
 README.md                Project overview, setup, how to run the pipeline
@@ -90,9 +90,18 @@ scripts/
   geocode_venues.py      Census Geocoder -> venues_geocoded CSV
   collect_census.py      ACS 1-year 2025, ACS 5-year 2020-2024, CBP 2023, search-area tracts
   evaluate_collection.py Read-only data-quality report
+  build_working_dataset.py  Processed CSVs -> 24-metro working files (data/processed/working_<run>/)
+  apply_dedup_decisions.py  Applies a decisions CSV -> working_dedup_v2 (pass 1) / working_dedup_v3 (pass 2)
+  extract_data_dictionary.py  Live MySQL information_schema -> Markdown column metadata (read-only)
+  check_import_counts.py Compares MySQL table row counts with CSV row counts (read-only)
   probes/                Exploratory scripts (resale, Last.fm, Census pilot); not part of the pipeline
 docs/
   data_sources.md        Main data documentation: sources, missing values, limitations, file inventory
+  project_decisions.md   Team decisions: scope, both dedup passes, limitations, business questions
+  dedup_decisions.csv    Dedup pass 1 decisions (decision columns only)
+  dedup_decisions_pass2.csv  Dedup pass 2 (cross-listing) decisions (decision columns only)
+  database_build_log.md  Template: chronological record of the MySQL build and import issues
+  data_dictionary_reference.md  Template: metadata extracted from the live database
   phase1_guide.md        LA/NYC pilot notes; full column reference for the events CSV
   ticketmaster_pricing_investigation.md, resale_source_options.md,
   lastfm_pivot_feasibility.md, census_option_assessment.md
@@ -178,7 +187,8 @@ Facts to keep in mind when working with these files (details in
 - **IDs as text:** Census IDs and ZIP codes have leading zeros and must be
   read as text.
 - **Missing values** stay blank, never zero:
-  - `local_time` is blank for 279 events (time TBA or no specific time);
+  - `local_time` is blank for 245 events in `working_dedup_v3` (279 before
+    the two dedup passes; time TBA or no specific time);
   - `genre` is blank for the 9 Miscellaneous/Undefined-segment events;
   - `subgenre` is kept for Sports only;
   - El Paso's CBP 711320 cell is unpublished (`published = False`, meaning
@@ -303,10 +313,10 @@ wording exactly as supplied.
 
 ## Recommended Documentation Organization
 
-Use these locations if Nathan and Nick choose to create them. None of them
-exists yet (as of 2026-11-11).
+All four files exist (as of 2026-11-18). The build log and data dictionary
+are empty templates until the database is built.
 
-- `docs/data_sources.md`: data collection and cleaning (exists).
+- `docs/data_sources.md`: data collection and cleaning.
 - `docs/database_build_log.md`: chronological record of database
   implementation and import issues.
 - `docs/data_dictionary_reference.md`: factual metadata extracted from the
@@ -353,9 +363,10 @@ These describe how to *record* information, not what the database should be.
 - Tag each entry with the author's name.
 - Never commit data files. CSVs stay out of Git. Processed CSVs live outside
   the repo, in the `../processed copy` folder.
-  - **Exception:** `docs/dedup_decisions.csv` is committed. It holds the
-    team's cleaning decisions, not data, and `scripts/apply_dedup_decisions.py`
-    reads it. It keeps only the 5 decision columns (`event_id`, `action`,
+  - **Exception:** `docs/dedup_decisions.csv` and
+    `docs/dedup_decisions_pass2.csv` are committed. They hold the team's
+    cleaning decisions, not data, and `scripts/apply_dedup_decisions.py`
+    reads them. They keep only the 5 decision columns (`event_id`, `action`,
     `reason`, `duplicate_of_event_id`, `note`). Ticketmaster fields such as
     event and venue names stay out of Git.
 
