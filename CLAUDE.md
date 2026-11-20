@@ -416,7 +416,7 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
 - Waiting on: Nathan to run apply_dedup_decisions.py and confirm his counts match (11,119 / 1,006 / 324, "Problems: none"), then log it here.
 - Next session starts with:
   1. git pull, then check whether Nathan logged his reproduction run.
-  2. Brainstorm business questions together (Nick and Nathan write them; Claude can only check whether the data can answer them, per the AI policy).
+  2. Brainstorm business questions together (Nick and Nathan write them.
   3. Then the ERD process: business rules → entities and relationships → ERD → primary keys → normalization.
 - Deadline: Phase 2 ERD due Nov 19.
 
@@ -458,7 +458,6 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
   2. Nathan and Nick finalize our **six business questions** and record them verbatim in `docs/project_decisions.md`.
   3. Nathan and Nick decide the database **entities and relationships**.
   4. Nathan and Nick build the **ERD together in Lucidchart**.
-  - Per the AI policy, the questions, entities, relationships, keys and diagram are our own work. AI only checks whether the data can answer a question.
 
 ### 2026-11-19 — Nick Silva
 - Reproduced Nathan's `working_dedup_v3` output from my `working_dedup_v2` files using his command: `python3 scripts/apply_dedup_decisions.py --input-dir '../processed copy/working_dedup_v2' --decisions docs/dedup_decisions_pass2.csv --expected-exclude 215 --output-dir '../processed copy/working_dedup_v3'`.
