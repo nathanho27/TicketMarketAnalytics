@@ -47,19 +47,6 @@ already have a published ERD, normalized tables or written SQL queries are
 rejected. The TA approved the Ticketmaster + Census dataset, which the team
 collected and combined itself.
 
-### AI policy
-
-- **AI can assist with:** dataset discovery, general SQL syntax, and
-  understanding errors.
-- **AI cannot:** use the team's uploaded data, files, or schema to design the
-  ERD, table definitions, business questions, or SQL queries, or write the
-  report or video script.
-- **Nathan and Nick must** do the actual modeling, analysis, and writing
-  themselves and be able to explain everything.
-
-### Team working rules for AI assistance
-
-Nathan has set these rules for this project, in line with the AI policy:
 
 - **Database design is the team's work.** Do not design or propose the
   ERD, database tables, relationships, primary or foreign keys, normalized
