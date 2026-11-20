@@ -470,3 +470,9 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
   3. Nathan and Nick decide the database **entities and relationships**.
   4. Nathan and Nick build the **ERD together in Lucidchart**.
   - Per the AI policy, the questions, entities, relationships, keys and diagram are our own work. AI only checks whether the data can answer a question.
+
+### 2026-11-19 — Nick Silva
+- Reproduced Nathan's `working_dedup_v3` output from my `working_dedup_v2` files using his command: `python3 scripts/apply_dedup_decisions.py --input-dir '../processed copy/working_dedup_v2' --decisions docs/dedup_decisions_pass2.csv --expected-exclude 215 --output-dir '../processed copy/working_dedup_v3'`.
+- Counts match Nathan's 2026-11-18 entry: 10,904 events, 969 venues, 539 excluded; ACS 24, CBP 72, market labels 24. The log ends with "Problems: none".
+- Inputs unchanged (`working_dedup_v2` and `docs/dedup_decisions_pass2.csv` checksums verified before and after).
+- My current working files are in '../processed copy/working_dedup_v3'.
