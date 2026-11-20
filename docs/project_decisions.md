@@ -434,6 +434,74 @@ session):
 175 of the 548 excluded rows reference venues that are not in the venues file
 (the 171 from earlier passes, plus the 4 events at the dropped venues).
 
+## 2026-11-19: Approved ERD design
+
+Designed and approved by Nathan and Nick for Phase 2. Recorded verbatim as
+supplied by Nick; this is a record of the team's own work.
+
+- **Notation:** crow's-foot.
+- **Built in:** Lucidchart, by Nathan and Nick.
+- **Data source:** `working_dedup_v4`.
+
+### Tables
+
+1. **METRO_AREA**
+   - PK: metro_area_geoid
+   - Attributes: census_metro_name, market_label
+2. **VENUE**
+   - PK: venue_id
+   - FK: metro_area_geoid → METRO_AREA
+   - Attributes: venue_name, venue_address, venue_city, venue_state,
+     venue_postal_code, venue_latitude, venue_longitude
+3. **EVENT**
+   - PK: event_id
+   - FKs: venue_id → VENUE, genre_id → GENRE
+   - Attributes: event_name, event_url, status, local_date, local_time,
+     subgenre, ticketing_platform
+   - segment_id, segment, and genre are not stored in EVENT.
+4. **SEGMENT**
+   - PK: segment_id
+   - Attributes: segment (2 rows: Music, Sports)
+5. **GENRE**
+   - PK: genre_id
+   - FK: segment_id → SEGMENT
+   - Attributes: genre
+6. **METRO_DEMOGRAPHICS**
+   - PK and FK: metro_area_geoid → METRO_AREA
+   - Attributes: population, population_moe, population_note,
+     median_household_income, median_household_income_moe,
+     median_household_income_note
+   - geo_name not stored.
+7. **INDUSTRY**
+   - PK: naics_code
+   - Attributes: naics_label
+8. **METRO_INDUSTRY**
+   - Composite PK: (metro_area_geoid, naics_code), both also FKs to
+     METRO_AREA and INDUSTRY
+   - Attributes: establishments, employees, employees_noise_flag, published,
+     note
+
+### Relationships and participation rules
+
+1. METRO_AREA to VENUE: one-to-many. One metro can have zero or many venues.
+   Every venue must belong to exactly one metro.
+2. VENUE to EVENT: one-to-many. One venue can have zero or many events. Every
+   event must belong to exactly one venue.
+3. SEGMENT to GENRE: one-to-many. One segment can have zero or many genres.
+   Every genre must belong to exactly one segment.
+4. GENRE to EVENT: one-to-many. One genre can have zero or many events. Every
+   event must belong to exactly one genre after excluding the nine events with
+   missing genres.
+5. METRO_AREA to METRO_DEMOGRAPHICS: one-to-one. One metro can have zero or
+   one demographics record. Every demographics record must belong to exactly
+   one metro.
+6. METRO_AREA to METRO_INDUSTRY: one-to-many. One metro can have zero or many
+   metro-industry records. Every metro-industry record must belong to exactly
+   one metro.
+7. INDUSTRY to METRO_INDUSTRY: one-to-many. One industry can have zero or many
+   metro-industry records. Every metro-industry record must belong to exactly
+   one industry.
+
 ## Open items
 
 - **Business questions:** not yet written. To be added here verbatim by

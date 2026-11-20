@@ -488,3 +488,6 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
 - **New counts:** 10,895 events (Music 8,689, Sports 2,206), 965 venues, 548 excluded; ACS 24, CBP 72, market labels 24 unchanged. Events + excluded = 11,443. The log ends with "Problems: none"; v3 and the decisions file were unchanged (checksums verified).
 - My current working files are in '../processed copy/working_dedup_v4'.
 - Nathan, to reproduce v4 (no script change): `python3 scripts/apply_dedup_decisions.py --input-dir data/processed/working_2026-11-10_222442/working_dedup_v3 --decisions docs/genre_exclusion_decisions.csv --expected-exclude 9 --output-dir data/processed/working_2026-11-10_222442/working_dedup_v4`. Expected: 10,895 / 965 / 548, "Problems: none".
+
+### 2026-11-19 — Nick Silva
+- Nathan and Nick finalized the Phase 2 ERD design (8 tables, 7 relationships, crow's-foot notation, built in Lucidchart, data source `working_dedup_v4`). Recorded verbatim in `docs/project_decisions.md` ("2026-11-19: Approved ERD design").
