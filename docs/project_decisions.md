@@ -350,6 +350,90 @@ session):
 - **Venue text:** leading or trailing spaces appear in 12 venue names,
   18 addresses and 2 cities.
 
+## 2026-11-19: Genre exclusion
+
+Decided by Nathan and Nick, relayed by Nick. The 9 events in
+`working_dedup_v3` with a blank `genre_id` are excluded: 6 in Ticketmaster's
+Miscellaneous segment and 3 in Undefined. Their `genre` is blank too, and no
+other event lacks a `genre_id`. As a result, only the **Music** and **Sports**
+segments remain, so the team's SEGMENT table will have 2 rows.
+
+Decisions are recorded per event in `docs/genre_exclusion_decisions.csv`
+(same five columns as the other decision files; 9 rows, all EXCLUDE,
+reason `missing_genre_id`, no `duplicate_of_event_id`). The file was
+generated from `working_dedup_v3/working_events.csv` (every row with a blank
+`genre_id`), not typed by hand.
+
+| Event ID | Segment | Date | Venue |
+|---|---|---|---|
+| `rZ7HnEZ1Af-UFK` | Miscellaneous | 2026-11-17 | The MET Church |
+| `rZ7HnEZ1Af-UuN` | Miscellaneous | 2026-11-18 | CityChurch |
+| `rZ7HnEZ1AfuU-0` | Miscellaneous | 2026-11-27 | Crescent Ballroom |
+| `rZ7HnEZ1Af8aC7` | Miscellaneous | 2026-12-08 | Belly Up |
+| `rZ7HnEZ1Af8Pjf` | Miscellaneous | 2026-12-31 | Valley Bar |
+| `rZ7HnEZ1Af8zj7` | Miscellaneous | 2027-01-01 | THE ROOF + THE ROOM |
+| `rZ7HnEZ1Af-pPN` | Undefined | 2026-11-15 | Brick and Mortar Music Hall |
+| `rZ7HnEZ1A4Z88K` | Undefined | 2026-11-24 | Hollywood Improv (The Lab) |
+| `rZ7HnEZ1Af8fr7` | Undefined | 2027-01-10 | Berlin |
+
+By market: Phoenix 2, New York 2, Los Angeles 1, Houston 1, San Antonio 1,
+San Francisco-Oakland 1, San Diego 1.
+
+### How it was applied
+
+`scripts/apply_dedup_decisions.py`, run a third time, on the second pass's
+output (no script change). Nick's run:
+
+```bash
+python3 scripts/apply_dedup_decisions.py \
+    --input-dir '../processed copy/working_dedup_v3' \
+    --decisions docs/genre_exclusion_decisions.csv --expected-exclude 9 \
+    --output-dir '../processed copy/working_dedup_v4'
+```
+
+`working_dedup_v3/` and the decisions file are unchanged (checksums verified
+before and after).
+
+### Venues removed
+
+4 venues had no events left and were dropped:
+
+| Venue ID | Venue |
+|---|---|
+| `rZ7HnEZ173bbP` | CityChurch |
+| `rZ7HnEZ178sjP` | Hollywood Improv (The Lab) |
+| `rZ7HnEZ17f7Gg` | THE ROOF + THE ROOM |
+| `rZ7HnEZ17fxF4` | The MET Church |
+
+The other 5 venues of excluded events keep other events.
+
+### Resulting dataset (`working_dedup_v4/`, verified 2026-11-19)
+
+| File | Rows | Columns | Change |
+|---|---|---|---|
+| `working_events.csv` | 10,895 | 13 | 10,904 − 9 |
+| `working_excluded_events.csv` | 548 | 5 | 539 + 9 |
+| `working_venues.csv` | 965 | 9 | 969 − 4 |
+| `working_acs1_2025_metros.csv` | 24 | 8 | unchanged (copied) |
+| `working_cbp2023_metros.csv` | 72 | 8 | unchanged (copied) |
+| `market_labels.csv` | 24 | 3 | unchanged (copied) |
+
+Events by segment: Music 8,689, Sports 2,206 (one `segment_id` each).
+
+Checks (script log, "Problems: none", plus a separate check in Nick's
+session):
+- no duplicate event or venue IDs, and no event ID in both the events and
+  excluded files;
+- events + excluded = 11,443, the source event count;
+- the events file is the input minus exactly the 9, rows otherwise unchanged;
+  all 539 earlier excluded rows are preserved;
+- every event's venue exists, and every venue has at least one event;
+- every remaining event has a `genre_id` and a `genre`;
+- the remaining venue rows and the three copied files are identical to the input.
+
+175 of the 548 excluded rows reference venues that are not in the venues file
+(the 171 from earlier passes, plus the 4 events at the dropped venues).
+
 ## Open items
 
 - **Business questions:** not yet written. To be added here verbatim by

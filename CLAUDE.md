@@ -138,6 +138,8 @@ Updated 2026-11-11 by Nick: after the dedup step (scripts/apply_dedup_decisions.
 
 Updated 2026-11-18 by Nathan: the cross-listing pass (`docs/dedup_decisions_pass2.csv`) produced the **current working files** in `working_dedup_v3`: 10,904 events, 969 venues, 539 excluded; ACS (24), CBP (72) and market labels (24) unchanged. `working_dedup_v2` is kept unchanged. See "2026-11-18: Cross-listed event cleanup" in docs/project_decisions.md.
 
+Updated 2026-11-19 by Nick: the genre exclusion (docs/genre_exclusion_decisions.csv) produced the current working files in working_dedup_v4: 10,895 events (Music 8,689, Sports 2,206), 965 venues, 548 excluded; ACS (24), CBP (72) and market labels (24) unchanged. The 9 Miscellaneous/Undefined events mentioned elsewhere in this file are now excluded. See '2026-11-19: Genre exclusion' in docs/project_decisions.md.
+
 Scope in brief:
 - **Markets:** 24 Census metro areas, with each event assigned by its venue's
   metro. Dallas-Fort Worth is one market.
@@ -476,3 +478,13 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
 - Counts match Nathan's 2026-11-18 entry: 10,904 events, 969 venues, 539 excluded; ACS 24, CBP 72, market labels 24. The log ends with "Problems: none".
 - Inputs unchanged (`working_dedup_v2` and `docs/dedup_decisions_pass2.csv` checksums verified before and after).
 - My current working files are in '../processed copy/working_dedup_v3'.
+
+### 2026-11-19 — Nick Silva
+- **Genre exclusion**, agreed by Nathan and Nick. Details in `docs/project_decisions.md` ("2026-11-19: Genre exclusion").
+  - Excluded the 9 events in `working_dedup_v3` with a blank `genre_id` (6 Miscellaneous, 3 Undefined), reason `missing_genre_id`.
+  - Only the Music and Sports segments remain, so the SEGMENT table will have 2 rows.
+  - New `docs/genre_exclusion_decisions.csv` (9 rows, all EXCLUDE; decision columns only, same exception as the other decision files), generated from the data.
+  - 4 venues had no events left and were dropped: CityChurch, Hollywood Improv (The Lab), THE ROOF + THE ROOM, The MET Church.
+- **New counts:** 10,895 events (Music 8,689, Sports 2,206), 965 venues, 548 excluded; ACS 24, CBP 72, market labels 24 unchanged. Events + excluded = 11,443. The log ends with "Problems: none"; v3 and the decisions file were unchanged (checksums verified).
+- My current working files are in '../processed copy/working_dedup_v4'.
+- Nathan, to reproduce v4 (no script change): `python3 scripts/apply_dedup_decisions.py --input-dir data/processed/working_2026-11-10_222442/working_dedup_v3 --decisions docs/genre_exclusion_decisions.csv --expected-exclude 9 --output-dir data/processed/working_2026-11-10_222442/working_dedup_v4`. Expected: 10,895 / 965 / 548, "Problems: none".

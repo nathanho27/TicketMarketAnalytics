@@ -1,0 +1,10 @@
+event_id,action,reason,duplicate_of_event_id,note
+rZ7HnEZ1A4Z88K,EXCLUDE,missing_genre_id,,Segment Undefined; genre_id blank in Ticketmaster data
+rZ7HnEZ1Af-UFK,EXCLUDE,missing_genre_id,,Segment Miscellaneous; genre_id blank in Ticketmaster data
+rZ7HnEZ1Af-UuN,EXCLUDE,missing_genre_id,,Segment Miscellaneous; genre_id blank in Ticketmaster data
+rZ7HnEZ1Af-pPN,EXCLUDE,missing_genre_id,,Segment Undefined; genre_id blank in Ticketmaster data
+rZ7HnEZ1Af8Pjf,EXCLUDE,missing_genre_id,,Segment Miscellaneous; genre_id blank in Ticketmaster data
+rZ7HnEZ1Af8aC7,EXCLUDE,missing_genre_id,,Segment Miscellaneous; genre_id blank in Ticketmaster data
+rZ7HnEZ1Af8fr7,EXCLUDE,missing_genre_id,,Segment Undefined; genre_id blank in Ticketmaster data
+rZ7HnEZ1Af8zj7,EXCLUDE,missing_genre_id,,Segment Miscellaneous; genre_id blank in Ticketmaster data
+rZ7HnEZ1AfuU-0,EXCLUDE,missing_genre_id,,Segment Miscellaneous; genre_id blank in Ticketmaster data
