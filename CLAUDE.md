@@ -528,3 +528,6 @@ OTHER POINTS:
   - **event_url:** 10,869 distinct across 10,895 events (4 URLs shared by 30 events on different dates); not a key, no change.
   - **Diagram:** legend and data sources box removed to match the professor's ERD examples.
 - Updated the "Oral Defense Study Points": replaced the VENUE address-fields point and added the market_label point.
+
+### 2026-11-21 — Nick Silva (end of session / stopping point)
+- Phase 2 ERD submitted (TicketMarketAnalytics_ERD_1page.pdf, one landscape page, exported from draw.io). Final design: 8 tables, 36 attributes, 7 relationships, current data in working_dedup_v5. Next session starts with git pull, then Phase 3 (database build and report, due Nov 30). Phase 3 import notes are already recorded: event names with double quotes, ZIP codes with stray spaces, two venue_city values with trailing spaces ('Las Vegas ', 'Brooklyn '), and the El Paso NULL counts.
