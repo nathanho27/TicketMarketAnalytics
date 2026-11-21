@@ -505,3 +505,17 @@ OTHER POINTS:
 - My current working files are in '../processed copy/working_dedup_v5'.
 - Nathan, to reproduce v5 from your v4: `python3 scripts/drop_erd_unused_columns.py --input-dir data/processed/working_2026-11-10_222442/working_dedup_v4 --output-dir data/processed/working_2026-11-10_222442/working_dedup_v5`. Expected: ACS 24 rows / 3 columns, CBP 72 rows / 5 columns, "Problems: none".
 - New sections: "Oral Defense Study Points" in this file (above the Progress log) and "2026-11-20: ERD revisions" in `docs/project_decisions.md`.
+
+### 2026-11-21 — Nathan Ho
+- Pulled Nick's commit 5546a6a (clean fast-forward, no conflicts) and reproduced `working_dedup_v5` from my `working_dedup_v4` files with his command, with no script change: `python3 scripts/drop_erd_unused_columns.py --input-dir data/processed/working_2026-11-10_222442/working_dedup_v4 --output-dir data/processed/working_2026-11-10_222442/working_dedup_v5`.
+- Result matches Nick's run:
+  - the log ends with "Problems: none";
+  - ACS 24 rows, 3 columns (`metro_area_geoid`, `population`, `median_household_income`);
+  - CBP 72 rows, 5 columns (`metro_area_geoid`, `naics_code`, `naics_label`, `establishments`, `employees`);
+  - events, venues, excluded events and market labels copied byte for byte (10,895 / 965 / 548 / 24).
+- Extra checks:
+  - every remaining ACS and CBP value is identical to v4;
+  - GEOIDs are still 5 characters;
+  - the El Paso 711320 CBP row (metro 21340) is the only row with blanks.
+- My `working_dedup_v4` files and `scripts/drop_erd_unused_columns.py` are unchanged (checksums before and after match).
+- My current working files are in `data/processed/working_2026-11-10_222442/working_dedup_v5`.
