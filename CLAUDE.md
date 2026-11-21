@@ -379,8 +379,9 @@ OTHER POINTS:
 - Attribute optionality vs. relationship participation: bold/plain = whether a column can be blank; circles on lines = whether zero related rows are allowed. FKs are required because every child must belong to exactly one parent.
 - Dropped columns (8): geo_name (duplicate of census_metro_name in METRO_AREA (data redundancy)), ACS margin-of-error and note columns, and CBP note, employees_noise_flag, and published. None support our business questions; the note columns were determined by other non-key columns (transitive-dependency pattern), and median_household_income_note was empty for all 24 metros. They were also removed from the working CSVs (working_dedup_v5).
 - El Paso: the one METRO_INDUSTRY row (NAICS 711320) has blank establishments and employees because Census suppressed them (fewer than 3 businesses). Blank means suppressed, not zero. SQL aggregates skip NULLs, so results are unaffected; mention it in the report.
-- VENUE address fields: 10 ZIP codes span multiple cities, so ZIP doesn't determine city; kept address fields together as standard practice.
+- VENUE address fields: 10 ZIP codes map to multiple city names as written, 9 after trimming whitespace from venue_city ('Las Vegas' vs 'Las Vegas '). Most remaining cases are neighborhood or borough naming variants (e.g., Foxboro/Foxborough, Flushing/Queens), so ZIP does not determine city in our data; we kept address fields together as standard practice.
 - Event names containing " | " are titles, not lists, so they are atomic.
+- market_label is required (bold): it is unique and never blank, making it a candidate key alongside census_metro_name.
 
 ## Progress log
 
@@ -519,3 +520,11 @@ OTHER POINTS:
   - the El Paso 711320 CBP row (metro 21340) is the only row with blanks.
 - My `working_dedup_v4` files and `scripts/drop_erd_unused_columns.py` are unchanged (checksums before and after match).
 - My current working files are in `data/processed/working_2026-11-10_222442/working_dedup_v5`.
+
+### 2026-11-21 — Nick Silva
+- **Final ERD check**, verified against '../processed copy/working_dedup_v5'. Details in `docs/project_decisions.md` ("2026-11-21: Final ERD check"). The approved eight-table design is unchanged; no scripts or data changed.
+  - **market_label** is now required: 24 unique, nonblank values, so it is a candidate key alongside census_metro_name.
+  - **ZIP/city:** 10 ZIPs map to multiple city names as written, 9 after trimming whitespace from venue_city. Two venue_city values have a trailing space ("Las Vegas ", "Brooklyn "), to handle in the Phase 3 import.
+  - **event_url:** 10,869 distinct across 10,895 events (4 URLs shared by 30 events on different dates); not a key, no change.
+  - **Diagram:** legend and data sources box removed to match the professor's ERD examples.
+- Updated the "Oral Defense Study Points": replaced the VENUE address-fields point and added the market_label point.

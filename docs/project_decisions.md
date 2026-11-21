@@ -581,6 +581,45 @@ Verification results:
   and after). The original source CSVs are only on Nathan's machine and
   were not read by the script.
 
+## 2026-11-21: Final ERD check
+
+Final check of the ERD by Nathan and Nick, recorded as supplied by Nick.
+Facts verified against `../processed copy/working_dedup_v5` on 2026-11-21.
+The approved eight-table design is unchanged.
+
+- **market_label: optional → required.** market_label has 24 unique,
+  nonblank values in `market_labels.csv`, so it is a candidate key alongside
+  census_metro_name. Required attributes are now the 2026-11-20 list plus
+  market_label.
+- **ZIP and city (no change):** in `working_venues.csv`, 10 ZIP codes map to
+  more than one venue_city as written, and 9 after trimming whitespace.
+  ZIP 89109 has both "Las Vegas" and "Las Vegas " (trailing space). The 9
+  remaining ZIPs and their city names:
+
+  | ZIP | City names |
+  |---|---|
+  | 02035 | Foxboro / Foxborough |
+  | 02134 | Allston / Boston |
+  | 10036 | New York / New York City |
+  | 11003 | Belmont Park / Elmont |
+  | 11367 | Flushing / Queens |
+  | 11378 | Maspeth / Queens |
+  | 37115 | Madison / Nashville |
+  | 85253 | Paradise Valley / Scottsdale |
+  | 90028 | Hollywood / Los Angeles |
+
+  Most are neighborhood or borough naming variants, so ZIP does not
+  determine city in this data. Address fields stay together in VENUE.
+  - **For the Phase 3 import:** two venue_city values have a trailing
+    space, "Las Vegas " (ZIP 89109) and "Brooklyn " (ZIP 11216). Only "Las
+    Vegas " affects the ZIP count, because ZIP 11216 has no other city name.
+- **event_url (no change):** 10,869 distinct values across 10,895 events. 4
+  URLs are shared by 30 events (groups of 2, 2, 2 and 24), each group with
+  the same event name on different dates. event_url is not a key.
+- **Diagram:** the legend and data sources box were removed to match the
+  professor's ERD examples. Source years (2025 ACS, 2023 CBP) remain
+  documented in `docs/data_sources.md` and this file.
+
 ## Open items
 
 - **Business questions:** not yet written. To be added here verbatim by
