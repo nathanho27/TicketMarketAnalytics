@@ -79,6 +79,7 @@ scripts/
   evaluate_collection.py Read-only data-quality report
   build_working_dataset.py  Processed CSVs -> 24-metro working files (data/processed/working_<run>/)
   apply_dedup_decisions.py  Applies a decisions CSV -> working_dedup_v2 (pass 1) / working_dedup_v3 (pass 2)
+  drop_erd_unused_columns.py  Drops the 8 ERD-unused ACS/CBP columns: working_dedup_v4 -> working_dedup_v5
   extract_data_dictionary.py  Live MySQL information_schema -> Markdown column metadata (read-only)
   check_import_counts.py Compares MySQL table row counts with CSV row counts (read-only)
   probes/                Exploratory scripts (resale, Last.fm, Census pilot); not part of the pipeline
@@ -126,6 +127,8 @@ Updated 2026-11-11 by Nick: after the dedup step (scripts/apply_dedup_decisions.
 Updated 2026-11-18 by Nathan: the cross-listing pass (`docs/dedup_decisions_pass2.csv`) produced the **current working files** in `working_dedup_v3`: 10,904 events, 969 venues, 539 excluded; ACS (24), CBP (72) and market labels (24) unchanged. `working_dedup_v2` is kept unchanged. See "2026-11-18: Cross-listed event cleanup" in docs/project_decisions.md.
 
 Updated 2026-11-19 by Nick: the genre exclusion (docs/genre_exclusion_decisions.csv) produced the current working files in working_dedup_v4: 10,895 events (Music 8,689, Sports 2,206), 965 venues, 548 excluded; ACS (24), CBP (72) and market labels (24) unchanged. The 9 Miscellaneous/Undefined events mentioned elsewhere in this file are now excluded. See '2026-11-19: Genre exclusion' in docs/project_decisions.md.
+
+Updated 2026-11-21 by Nick: the current working files are now in working_dedup_v5: same rows as v4, with the 8 ERD-unused ACS/CBP columns removed (geo_name, population_moe, population_note, median_household_income_moe, median_household_income_note; note, employees_noise_flag, published). See '2026-11-20: ERD revisions' in docs/project_decisions.md.
 
 Scope in brief:
 - **Markets:** 24 Census metro areas, with each event assigned by its venue's
@@ -363,6 +366,22 @@ These describe how to *record* information, not what the database should be.
 
 Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
 
+## Oral Defense Study Points
+
+MAIN POINT — Candidate keys in METRO_AREA:
+- Q: "market_label determines census_metro_name. Isn't that a transitive dependency?"
+- A: No. Both are unique for every metro, so each is a candidate key. A transitive dependency requires a non-key attribute determining another non-key attribute. Lecture (Data Modeling Part 2): "JOB_CLASS → CHG_HOUR is not a transitive dependency because JOB_CLASS is a candidate key." We chose metro_area_geoid as the PK because it is the stable Census identifier shared across all source files.
+
+OTHER POINTS:
+- Identifying vs. non-identifying: solid lines (METRO_AREA→METRO_DEMOGRAPHIC, METRO_AREA→METRO_INDUSTRY, INDUSTRY→METRO_INDUSTRY) because the parent PK is part of the child PK; dashed lines for the other four. METRO_DEMOGRAPHIC and METRO_INDUSTRY meet the lecture's definition of weak entities.
+- 2NF: only METRO_INDUSTRY has a composite PK; naics_label depends only on naics_code, so it lives in INDUSTRY.
+- 3NF: genre/segment names are not stored in EVENT; geo_name not stored in METRO_DEMOGRAPHIC.
+- Attribute optionality vs. relationship participation: bold/plain = whether a column can be blank; circles on lines = whether zero related rows are allowed. FKs are required because every child must belong to exactly one parent.
+- Dropped columns (8): geo_name (duplicate of census_metro_name in METRO_AREA (data redundancy)), ACS margin-of-error and note columns, and CBP note, employees_noise_flag, and published. None support our business questions; the note columns were determined by other non-key columns (transitive-dependency pattern), and median_household_income_note was empty for all 24 metros. They were also removed from the working CSVs (working_dedup_v5).
+- El Paso: the one METRO_INDUSTRY row (NAICS 711320) has blank establishments and employees because Census suppressed them (fewer than 3 businesses). Blank means suppressed, not zero. SQL aggregates skip NULLs, so results are unaffected; mention it in the report.
+- VENUE address fields: 10 ZIP codes span multiple cities, so ZIP doesn't determine city; kept address fields together as standard practice.
+- Event names containing " | " are titles, not lists, so they are atomic.
+
 ## Progress log
 
 ### 2026-11-11 — Nick Silva
@@ -477,3 +496,12 @@ Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
 
 ### 2026-11-19 — Nick Silva
 - Nathan and Nick finalized the Phase 2 ERD design (8 tables, 7 relationships, crow's-foot notation, built in Lucidchart, data source `working_dedup_v4`). Recorded verbatim in `docs/project_decisions.md` ("2026-11-19: Approved ERD design").
+
+### 2026-11-21 — Nick Silva
+- **ERD-unused columns dropped from the working CSVs**, agreed by Nathan and Nick, so the data matches the revised ERD. Details in `docs/project_decisions.md` ("2026-11-20: ERD revisions").
+  - New `scripts/drop_erd_unused_columns.py` drops 8 columns: geo_name, population_moe, population_note, median_household_income_moe, median_household_income_note from `working_acs1_2025_metros.csv`; note, employees_noise_flag, published from `working_cbp2023_metros.csv`. The other 4 files are copied byte for byte.
+  - My run: `python3 scripts/drop_erd_unused_columns.py --input-dir '../processed copy/working_dedup_v4' --output-dir '../processed copy/working_dedup_v5'`. The log ends with "Problems: none".
+- **Counts in v5:** ACS 24 rows (3 columns), CBP 72 rows (5 columns); events 10,895, venues 965, excluded 548 and market labels 24, all byte-identical to v4. Remaining values identical to v4; the El Paso 711320 row is still present with blank establishments and employees. Archive, v2, v3 and v4 unchanged (checksums verified).
+- My current working files are in '../processed copy/working_dedup_v5'.
+- Nathan, to reproduce v5 from your v4: `python3 scripts/drop_erd_unused_columns.py --input-dir data/processed/working_2026-11-10_222442/working_dedup_v4 --output-dir data/processed/working_2026-11-10_222442/working_dedup_v5`. Expected: ACS 24 rows / 3 columns, CBP 72 rows / 5 columns, "Problems: none".
+- New sections: "Oral Defense Study Points" in this file (above the Progress log) and "2026-11-20: ERD revisions" in `docs/project_decisions.md`.

@@ -502,6 +502,85 @@ supplied by Nick; this is a record of the team's own work.
    metro-industry records. Every metro-industry record must belong to exactly
    one industry.
 
+## 2026-11-20: ERD revisions
+
+Revisions by Nathan and Nick to the "2026-11-19: Approved ERD design" above,
+recorded as supplied by Nick. The 2026-11-19 section is kept unchanged.
+
+- **Renamed:** METRO_DEMOGRAPHICS → METRO_DEMOGRAPHIC (lecture: entity names
+  are singular).
+- **Dropped from METRO_DEMOGRAPHIC** (source `working_acs1_2025_metros.csv`):
+  - geo_name: duplicate of census_metro_name in METRO_AREA (data redundancy);
+  - population_moe, population_note, median_household_income_moe,
+    median_household_income_note.
+  - Final: metro_area_geoid (PK, FK), population, median_household_income.
+- **Dropped from METRO_INDUSTRY** (source `working_cbp2023_metros.csv`): note,
+  employees_noise_flag, published.
+  - Final: metro_area_geoid (PK, FK), naics_code (PK, FK), establishments,
+    employees.
+- **Columns kept in the CSVs that are not stored in the table of the same
+  file:**
+  - `working_cbp2023_metros.csv` keeps naics_label because it is the source
+    for the INDUSTRY table.
+  - `working_events.csv` keeps segment_id, segment and genre because they
+    are the source for the SEGMENT and GENRE tables.
+- **Model now has 36 attributes.**
+- **Relationship names:**
+  - METRO_AREA contains VENUE;
+  - VENUE hosts EVENT;
+  - SEGMENT contains GENRE;
+  - GENRE classifies EVENT;
+  - METRO_AREA reports METRO_DEMOGRAPHIC;
+  - METRO_AREA supports METRO_INDUSTRY;
+  - INDUSTRY categorizes METRO_INDUSTRY.
+- **Required (bold):** all PKs and FKs, plus segment, genre, event_name,
+  local_date, status, venue_name, census_metro_name, naics_label,
+  population, median_household_income. All other attributes are optional
+  (plain).
+- **Line style:** solid = identifying (3), dashed = non-identifying (4).
+- **Diagram:** built in draw.io and exported to PDF from draw.io.
+
+### Columns removed from the working CSVs (`working_dedup_v5/`, verified 2026-11-21)
+
+The 8 dropped columns were also removed from the working CSVs by the new
+`scripts/drop_erd_unused_columns.py`, run by Nick on 2026-11-21:
+
+```bash
+python3 scripts/drop_erd_unused_columns.py \
+    --input-dir '../processed copy/working_dedup_v4' \
+    --output-dir '../processed copy/working_dedup_v5'
+```
+
+- Reads everything as text and keeps all rows and the order of the remaining
+  columns. The other 4 files are copied byte for byte.
+- Stops with an error if any of the 8 columns is missing, and never writes
+  to its input folder.
+- Writes `drop_erd_unused_columns.log` in the output folder. The run ended
+  with "Problems: none".
+
+Verification results:
+
+| File | v4 | v5 |
+|---|---|---|
+| `working_acs1_2025_metros.csv` | 24 rows, 8 columns | 24 rows, 3 columns: metro_area_geoid, population, median_household_income |
+| `working_cbp2023_metros.csv` | 72 rows, 8 columns | 72 rows, 5 columns: metro_area_geoid, naics_code, naics_label, establishments, employees |
+| `working_events.csv` | 10,895 rows | byte-identical |
+| `working_venues.csv` | 965 rows | byte-identical |
+| `working_excluded_events.csv` | 548 rows | byte-identical |
+| `market_labels.csv` | 24 rows | byte-identical |
+
+- Every remaining ACS and CBP value is identical to v4. The dropped columns
+  are gone, and the remaining columns keep their order.
+- GEOIDs keep their leading zeros (all 5 characters).
+- geo_name was identical to census_metro_name in `market_labels.csv` for
+  all 24 metros, so dropping it loses no information.
+- The El Paso 711320 CBP row (metro 21340) is still present, with blank
+  establishments and employees. It is the only CBP row with blanks.
+- On Nick's machine, `Archive`, `working_dedup_v2`, `working_dedup_v3` and
+  `working_dedup_v4` are unchanged (27 files; SHA-256 checksums match before
+  and after). The original source CSVs are only on Nathan's machine and
+  were not read by the script.
+
 ## Open items
 
 - **Business questions:** not yet written. To be added here verbatim by
