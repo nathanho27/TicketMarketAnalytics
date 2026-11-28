@@ -83,13 +83,16 @@ scripts/
   extract_data_dictionary.py  Live MySQL information_schema -> Markdown column metadata (read-only)
   check_import_counts.py Compares MySQL table row counts with CSV row counts (read-only)
   probes/                Exploratory scripts (resale, Last.fm, Census pilot); not part of the pipeline
+sql/                     Phase 3 build scripts 01-08, README.md, v5_checksums.sha256: reproduce the database
 docs/
+  phase3_handoff.md      START HERE (Nick): how to reproduce the Phase 3 database, decisions, status, prompt
   data_sources.md        Main data documentation: sources, missing values, limitations, file inventory
   project_decisions.md   Team decisions: scope, both dedup passes, limitations, business questions
   dedup_decisions.csv    Dedup pass 1 decisions (decision columns only)
   dedup_decisions_pass2.csv  Dedup pass 2 (cross-listing) decisions (decision columns only)
-  database_build_log.md  Template: chronological record of the MySQL build and import issues
-  data_dictionary_reference.md  Template: metadata extracted from the live database
+  database_build_log.md  Chronological record of the MySQL build: commands, results, rehearsal findings
+  data_dictionary_reference.md  Dictionary reference (descriptions to be written)
+  data_dictionary_reference_generated.md  Metadata extracted from the live database and verified
   phase1_guide.md        LA/NYC pilot notes; full column reference for the events CSV
   ticketmaster_pricing_investigation.md, resale_source_options.md,
   lastfm_pivot_feasibility.md, census_option_assessment.md
@@ -405,6 +408,9 @@ verified 2026-11-27):
 `working_excluded_events.csv` is not part of the ERD and is not loaded.
 
 **Where the work is recorded:**
+- `docs/phase3_handoff.md`: the handoff for Nick: what was built, why, how to
+  reproduce it step by step with expected output, what remains, and a prompt
+  to start a Claude session;
 - `docs/database_build_log.md`: each build and import step, with exact
   commands and any actual errors (only issues that really occurred);
 - `docs/data_dictionary_reference.md`: metadata generated from the live
@@ -603,4 +609,9 @@ OTHER POINTS:
 - **One correction made along the way:** `CAST(NULLIF(local_time, '') AS TIME)` returns wrong times in MySQL 9.5, so `local_time` is loaded with `CASE WHEN ... THEN NULL ELSE CAST(...) END` (Decision 6 and the build log).
 - **Data dictionary:** metadata extracted and verified in `docs/data_dictionary_reference_generated.md`; every description is still "to be written" by Nathan and Nick.
 - **Still to do before Nov 30, 11:59 PM:** Nick confirms the six build decisions and reproduces the build; write the column descriptions; write at least 6 business questions (record them verbatim in `docs/project_decisions.md`); write the 3 to 4 page report.
+
+### 2026-11-27 — Nathan Ho (handoff written)
+- Wrote `docs/phase3_handoff.md` for Nick: the final database and row counts, the six decisions, the exact commands to reproduce the build on his machine (prerequisites, working directories, expected output for every step), the validation checks, which issues were real vs found in rehearsals, where everything is, and a ready-to-paste prompt for his Claude session. Added `sql/v5_checksums.sha256` so he can verify his six CSV files first.
+- **Nick: start with `docs/phase3_handoff.md`.** Reproduce the build with the existing scripts (no redesign), record your results in `docs/database_build_log.md` tagged with your name, and confirm the six decisions in `docs/project_decisions.md`.
+- Stopping point: database built and verified on Nathan's machine; everything committed. Not done yet: Nick's reproduction, column descriptions, at least 6 business questions, the 3 to 4 page report (due Monday Nov 30, 11:59 PM).
 

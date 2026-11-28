@@ -27,6 +27,20 @@ path, so it works on any machine. Run that script from the folder that
 folder is different on each machine, which is why the path is not written into
 the script. The script's own comments say exactly how to run it.
 
+## Check your CSV files first
+
+`v5_checksums.sha256` holds the SHA-256 checksum of each of the six
+`working_dedup_v5` files. From the folder that contains `working_dedup_v5/`:
+
+```bash
+shasum -a 256 -c /path/to/repository/sql/v5_checksums.sha256
+```
+
+Every line must end in `: OK` before anything is loaded.
+
+For the complete step-by-step instructions with expected output, see
+`docs/phase3_handoff.md`.
+
 ## Scripts
 
 | Script | Step |
