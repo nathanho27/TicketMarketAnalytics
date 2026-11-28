@@ -411,3 +411,126 @@ compared with the counts in CLAUDE.md, "Working Dataset".
   that without 4a the load stops with error 3948, and without the
   `--local-infile=1` flag it stops with error 2068.
 - **Fix / decision:** none needed. No import errors occurred.
+
+### 2026-11-27: Step 5, validate the staging data (Nathan)
+
+- **Source files:** none read; the script only reads the staging tables loaded
+  in Step 4.
+- **Script:** `sql/05_validate_staging.sql` (57 read-only checks, each with an
+  expected value, the actual value and PASS or FAIL; the final row counts the
+  failures).
+- **Action:** Nathan ran the script in a Mac terminal from the repository
+  root, as `root`, before anything was copied into the final tables
+  (Decision 5). Nothing was changed by this step.
+- **Command:**
+
+  ```bash
+  mysql -u root -p --table < sql/05_validate_staging.sql
+  ```
+
+- **Result** (full output pasted by Nathan): **all 57 checks PASS; FAILED
+  CHECKS = 0.** In every row the actual value equals the expected value:
+
+  | Group | Checks | Actual values |
+  |---|---|---|
+  | Row counts | 1 to 5 | `stg_event` 10,895; `stg_venue` 965; `stg_market_label` 24; `stg_acs` 24; `stg_cbp` 72 |
+  | Dependencies and distinct values | 6 to 12 | 0 violations each for `genre_id` to `segment_id` and `genre`, `segment_id` to `segment`, `naics_code` to `naics_label`; 2 segment IDs; 41 genre IDs (case-sensitive); 3 NAICS codes; 4 status values |
+  | Key uniqueness | 13 to 19 | 0 duplicates for `event_id`, `venue_id`, `metro_area_geoid` (labels and ACS), `census_metro_name`, `market_label`, and (`metro_area_geoid`, `naics_code`) |
+  | Blanks in future `NOT NULL` columns | 20 to 24 | 0 in each of the five tables |
+  | Foreign-key coverage | 25 to 31 | 0 events without a venue; 0 venue, ACS or CBP rows without a metro; 0 metros without an ACS row; 0 metros without exactly 3 CBP rows; 0 venues without an event |
+  | Decision 6 whitespace counts | 32 to 36 | `venue_name` 12; `venue_address` 17; `venue_city` 2; `venue_postal_code` 3; 0 rows with edge whitespace in any column that is not trimmed |
+  | Decision 6 blank counts | 37 to 42 | `local_time` 245; `subgenre` 8,693; `venue_address` 16; `establishments` 1; `employees` 1; 0 in the seven other nullable columns |
+  | ACS whole numbers and CBP counts | 43 to 48 | 24 of 24 `population` and 24 of 24 `median_household_income` values are digits followed by `.0`; 0 values above the `INT` limit; 71 non-blank `establishments` and 71 non-blank `employees`, all digits only |
+  | Formats and lengths | 49 to 57 | 0 invalid dates, times, ZIP codes or coordinates; 0 values too long for their final column in any table |
+
+- **Decision applied:** the ACS whole-number check required by Nathan in
+  Decision 6 passed, so the `.0` values can be cast safely in Step 6.
+- **Fix / decision:** none needed. The data may be transferred (Step 6).
+
+### 2026-11-27: Step 6 rehearsal on a throwaway server found a wrong expression (run by Claude; not the project database)
+
+- **Purpose:** rehearse `sql/06_populate_tables.sql` on a throwaway MySQL 9.5.0
+  server (scratch folder, port 3399, deleted afterwards) with the real
+  `working_dedup_v5` data loaded into staging. Nathan's server and databases
+  were not touched.
+- **Note:** this was a rehearsal, **not** an import challenge on the project
+  database. Nothing from it has been run on Nathan's server.
+- **Result:** the first version of the script failed at the `event` insert:
+
+  ```text
+  ERROR 1292 (22007) at line 93: Truncated incorrect INTEGER value: '12:00:00'
+  ```
+
+  The cause was the expression `CAST(NULLIF(local_time, '') AS TIME)` from
+  Decision 6. Compared with the staging text:
+
+  | Expression for `local_time` | Non-blank rows that differ from `CAST(local_time AS TIME)` |
+  |---|---|
+  | `CAST(NULLIF(local_time, '') AS TIME)` | **10,650 of 10,650** (`12:00:00` became `00:00:12`) |
+  | `TIME(NULLIF(local_time, ''))` | 10,650 of 10,650 |
+  | `CASE WHEN local_time = '' THEN NULL ELSE CAST(local_time AS TIME) END` | 0 |
+  | `NULLIF(local_time, '')` inserted straight into a `TIME` column | 0 |
+
+  The earlier cleaning-rule test (entry "Cleaning-rule tests on staging
+  tables") checked only the NULL count for this case, not the stored times;
+  the straight insert happens to be correct, the explicit `CAST` form is not.
+- **Fix:** the script now uses the `CASE` form. Decision 6 was corrected (see
+  "Correction to Decision 6" in `docs/project_decisions.md`).
+- **Other conversions checked** against the staging text, 0 differences each:
+  latitude and longitude (`CAST(NULLIF(x, '') AS DECIMAL(18,15))`),
+  `establishments` and `employees`, and the ACS casts.
+- **Corrected script, results on the throwaway server:**
+  - 0 warnings after each of the 8 inserts; row counts 24, 2, 3, 965, 41, 24,
+    72, 10,895 (all PASS);
+  - `local_time`: 245 NULLs, 0 invented `00:00:00` values, 0 wrong times;
+  - `local_date`, event names, statuses and URLs: 0 differences from staging;
+  - `venue`: 0 wrong coordinates, 0 values with edge whitespace left,
+    `venue_address` NULL for 16, venue `rZ7HnEZ17rfqV` trimmed to 10
+    characters;
+  - `metro_demographic`: population sum 120,585,924, Austin 2,620,945;
+  - `metro_industry`: 0 wrong counts, 1 row with NULL counts (El Paso).
+- **Transaction behavior tested:** running the script again on filled tables
+  stopped at the first insert with `ERROR 1062 (23000): Duplicate entry
+  '12420' for key 'metro_area.PRIMARY'` and changed nothing. With a staging
+  value broken on purpose (a venue pointing at a metro that does not exist),
+  the script stopped with `ERROR 1452 (23000) ... foreign key constraint
+  fails` at the `venue` insert, and all 8 tables were left empty (the
+  transaction rolled back).
+
+### 2026-11-27: Step 6, populate the final tables (Nathan)
+
+- **Source files:** none read; the script copies from the validated staging
+  tables.
+- **Script:** `sql/06_populate_tables.sql` (corrected version, after the
+  rehearsal finding recorded above)
+- **Action:** Nathan ran the script in a Mac terminal from the repository
+  root, as `root`. It copies the staging data into the 8 final tables in one
+  transaction, parents first (`metro_area`, `segment`, `industry`, `venue`,
+  `genre`, `metro_demographic`, `metro_industry`, `event`), with foreign keys
+  switched on and the Decision 6 cleaning rules (trim the four venue text
+  columns, blank to NULL, ACS casts, `local_time` via `CASE`). The staging
+  tables were not changed.
+- **Command:**
+
+  ```bash
+  mysql -u root -p --table < sql/06_populate_tables.sql
+  ```
+
+- **Result** (full output pasted by Nathan): no error; the warning count
+  after each of the 8 inserts was **0**; the row-count table shows PASS for
+  every table:
+
+  | Table | Expected | Actual | Result |
+  |---|---|---|---|
+  | `metro_area` | 24 | 24 | PASS |
+  | `segment` | 2 | 2 | PASS |
+  | `industry` | 3 | 3 | PASS |
+  | `venue` | 965 | 965 | PASS |
+  | `genre` | 41 | 41 | PASS |
+  | `metro_demographic` | 24 | 24 | PASS |
+  | `metro_industry` | 72 | 72 | PASS |
+  | `event` | 10,895 | 10,895 | PASS |
+
+- **Fix / decision:** none needed on the project database. The staging tables
+  are still in place; they are dropped only after the Step 7 final checks
+  pass (Decision 5).

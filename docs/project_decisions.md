@@ -883,7 +883,8 @@ confirm.
      `venue_postal_code`, `venue_latitude`, `venue_longitude`,
      `establishments`, `employees`. Expected NULLs: `local_time` 245,
      `subgenre` 8,693, `venue_address` 16, `establishments` 1 and
-     `employees` 1 (El Paso); the other seven nullable columns 0.
+     `employees` 1 (El Paso); the other seven nullable columns 0. (`local_time` gets the
+     same blank-to-NULL effect through the `CASE` form in rule 4.)
   3. **ACS numbers: validate, then cast.** Before the transfer, in
      `stg_acs`: every `population` and `median_household_income` value is
      digits followed by `.0` (expected 24 of 24 for each), none is blank,
@@ -893,8 +894,11 @@ confirm.
      `employees`) must be digits only when not blank (71 of 71 each) and are
      copied with `NULLIF(col, '')`.
   4. **Dates and times.** `local_date` (`YYYY-MM-DD` text) goes straight into
-     the `DATE` column; `local_time` is `CAST(NULLIF(local_time, '') AS
-     TIME)`.
+     the `DATE` column; `local_time` is NULL when blank and is otherwise cast
+     to `TIME` with `CASE WHEN local_time = '' THEN NULL ELSE CAST(local_time AS
+     TIME) END`. (Corrected 2026-11-27: the first wording,
+     `CAST(NULLIF(local_time, '') AS TIME)`, gives wrong times; see the
+     correction note below.)
   5. **Load settings.** `LOAD DATA LOCAL INFILE ... CHARACTER SET utf8mb4
      FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY
      '\n' IGNORE 1 LINES`, with the client connected using
@@ -926,6 +930,20 @@ confirm.
   events can be split across IDs. The IDs are not merged: the ERD and the
   cleaning are final. Venue-concentration results should say "venue IDs" and
   state this limitation.
+
+### Correction to Decision 6 (2026-11-27, found in the Step 6 rehearsal)
+
+The rehearsal of `sql/06_populate_tables.sql` on a throwaway server showed
+that `CAST(NULLIF(local_time, '') AS TIME)` converts `12:00:00` into
+`00:00:12`, for all 10,650 non-blank times, and stops the insert with
+`ERROR 1292 (22007): Truncated incorrect INTEGER value: '12:00:00'`. The
+rule itself is unchanged (blank becomes NULL; otherwise a `TIME`). Only the
+expression changed, to the `CASE` form in rule 4, which matched the staging
+text on all 10,650 non-blank rows and gave 245 NULLs. The other conversions
+(latitude, longitude, `establishments`, `employees`, the ACS casts) were
+compared with the staging text and had 0 differences. Step 7 therefore
+compares the values in the final tables with the staging tables, not only
+the counts. Details are in the build log.
 
 ## Open items
 

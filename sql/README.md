@@ -38,6 +38,7 @@ the script. The script's own comments say exactly how to run it.
 | `04b_load_staging.sql` | Load the 5 CSVs into the staging tables, then run 4 checks (needs `--local-infile=1`; run from the folder that contains `working_dedup_v5/`) |
 | `04c_disable_local_infile.sql` | Switch `LOAD DATA LOCAL` off again, right after 04b |
 | `05_validate_staging.sql` | Validate the staging data with 57 read-only checks (PASS/FAIL each) before anything is transferred |
+| `06_populate_tables.sql` | Copy the validated staging data into the 8 final tables in one transaction, with the Decision 6 cleaning rules |
 
 More scripts are added as each step is completed and confirmed.
 
@@ -53,3 +54,20 @@ mysql -u <your_mysql_user> -p -e "DROP DATABASE ticket_market_analytics;"
 
 This deletes everything in that database, so use it only before the real data
 has been loaded and checked, or when you intend to reload everything.
+
+## Redoing step 6 only
+
+Step 6 runs in one transaction, so if a statement fails nothing is kept. If the
+tables were filled but you need to repeat the step, empty them child-first
+(this leaves the staging tables untouched), then run `06` again:
+
+```sql
+DELETE FROM event;
+DELETE FROM genre;
+DELETE FROM metro_industry;
+DELETE FROM metro_demographic;
+DELETE FROM venue;
+DELETE FROM industry;
+DELETE FROM segment;
+DELETE FROM metro_area;
+```
