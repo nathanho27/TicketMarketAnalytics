@@ -23,8 +23,21 @@ descriptions.
 
 ## Extraction
 
-_Not run yet: the database has not been built._
+- **Database:** `ticket_market_analytics` (MySQL 9.5.0), built in Phase 3 with
+  the scripts in `sql/`; see `docs/database_build_log.md`.
+- **Run:** 2026-11-27 21:09, after the staging tables were dropped, with
+  `scripts/extract_data_dictionary.py`. The query used is printed in the
+  generated file.
+- **Generated file:** [`data_dictionary_reference_generated.md`](data_dictionary_reference_generated.md)
+  lists, for each of the 8 tables, every column with its MySQL type, collation,
+  nullability, primary-key and foreign-key information, default and extra.
+- **Verified:** the generated metadata matches the approved column
+  specification (Decisions 2 to 4 in `docs/project_decisions.md`) column by
+  column: 8 tables, 36 columns, 9 primary-key columns, 7 foreign-key columns, 12
+  nullable columns, 7 `utf8mb4_bin` columns, no differences.
 
 ## Tables
 
-_None yet._
+The table and column metadata is in the generated file above. The description
+of each table and column is still **to be written** by Nathan and Nick; once
+written or confirmed it is added here.

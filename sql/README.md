@@ -39,6 +39,8 @@ the script. The script's own comments say exactly how to run it.
 | `04c_disable_local_infile.sql` | Switch `LOAD DATA LOCAL` off again, right after 04b |
 | `05_validate_staging.sql` | Validate the staging data with 57 read-only checks (PASS/FAIL each) before anything is transferred |
 | `06_populate_tables.sql` | Copy the validated staging data into the 8 final tables in one transaction, with the Decision 6 cleaning rules |
+| `07_final_checks.sql` | 77 read-only final checks (PASS/FAIL each): structure, counts, orphans, every value against staging, nothing lost by normalizing, NULLs, spot values |
+| `08_drop_staging_tables.sql` | Drop only the 5 staging tables (after Step 7 passes and the CSV checksums match); confirm exactly 8 tables remain |
 
 More scripts are added as each step is completed and confirmed.
 

@@ -596,3 +596,11 @@ OTHER POINTS:
 - Tests behind these decisions ran on throwaway MySQL servers, not on the project database; they are labeled as tests in the build log.
 - **Next:** turn on local file loading for the load, create the 8 tables, load and validate the staging tables, copy into the final tables, run the final checks, drop the staging tables, then generate the data dictionary. Business questions and the report are still to be written by Nathan and Nick.
 
+### 2026-11-27 — Nathan Ho (database built)
+- **The database is built.** `ticket_market_analytics` has the 8 ERD tables, loaded from `working_dedup_v5`: `metro_area` 24, `segment` 2, `industry` 3, `venue` 965, `genre` 41, `metro_demographic` 24, `metro_industry` 72, `event` 10,895. Every step, with its result, is in `docs/database_build_log.md`; the decisions behind it are in `docs/project_decisions.md` ("2026-11-27: Phase 3 build decisions").
+- **Reproducible:** the numbered scripts in `sql/` (01 to 08) build the same database on another machine. `sql/README.md` says how to run them, with relative paths and no passwords. Nick: run them on your machine and compare with the build log.
+- **Checks:** 57 staging checks (Step 5) and 77 final checks (Step 7) all passed; the six `working_dedup_v5` CSVs were never changed (checksums re-verified); the 5 staging tables were dropped only afterwards; `local_infile` is off again.
+- **One correction made along the way:** `CAST(NULLIF(local_time, '') AS TIME)` returns wrong times in MySQL 9.5, so `local_time` is loaded with `CASE WHEN ... THEN NULL ELSE CAST(...) END` (Decision 6 and the build log).
+- **Data dictionary:** metadata extracted and verified in `docs/data_dictionary_reference_generated.md`; every description is still "to be written" by Nathan and Nick.
+- **Still to do before Nov 30, 11:59 PM:** Nick confirms the six build decisions and reproduces the build; write the column descriptions; write at least 6 business questions (record them verbatim in `docs/project_decisions.md`); write the 3 to 4 page report.
+

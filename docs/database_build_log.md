@@ -534,3 +534,124 @@ compared with the counts in CLAUDE.md, "Working Dataset".
 - **Fix / decision:** none needed on the project database. The staging tables
   are still in place; they are dropped only after the Step 7 final checks
   pass (Decision 5).
+
+### 2026-11-27: Step 7, final checks on the populated tables (Nathan)
+
+- **Source files:** none read; the script only reads the 8 final tables and
+  the 5 staging tables.
+- **Script:** `sql/07_final_checks.sql` (77 read-only checks, each with an
+  expected value, the actual value and PASS or FAIL).
+- **Action:** Nathan ran the script in a Mac terminal from the repository
+  root, as `root`, before the staging tables were dropped (Decision 5).
+- **Command:**
+
+  ```bash
+  mysql -u root -p --table < sql/07_final_checks.sql
+  ```
+
+- **Result** (full output pasted by Nathan): **all 77 checks PASS; FAILED
+  CHECKS = 0.** In every row the actual value equals the expected value:
+
+  | Group | Checks | Actual values |
+  |---|---|---|
+  | A. Structure | 1 to 7 | 13 tables (8 final + 5 staging); 36 columns in the final tables; 7 foreign-key columns, 0 with a collation different from the parent; 7 `utf8mb4_bin` columns; 12 columns that allow NULL; 2 `UNIQUE` keys on `metro_area` besides the primary key |
+  | B. Row counts | 8 to 15 | `metro_area` 24; `segment` 2; `industry` 3; `venue` 965; `genre` 41; `metro_demographic` 24; `metro_industry` 72; `event` 10,895 |
+  | C. Orphans and empty parents | 16 to 29 | 0 orphan rows for each of the 7 foreign keys; 0 metros without venues or a demographic row or exactly 3 industry rows; 0 venues or genres without events; 0 segments without genres; 0 industries without `metro_industry` rows |
+  | D. Values against staging | 30 to 38 | 0 missing, extra or different rows in each of the 8 tables; 0 events whose `local_time` differs from the source text |
+  | E. Nothing lost by splitting | 39 to 41 | 0 events whose segment, genre or IDs rebuilt through `genre` and `segment` differ from the original row; 0 `naics_label` differences; 0 `market_label` differences |
+  | F. NULLs and cleaning | 42 to 50 | NULL `local_time` 245; `subgenre` 8,693; `venue_address` 16; `establishments` 1; `employees` 1; 0 NULLs in the 7 other nullable columns; 0 empty strings; 0 invented `00:00:00` times; 0 venue text values with edge whitespace |
+  | G. Spot values from the CSV files | 51 to 77 | Austin population 2,620,945 and income 102,427; population sum 120,585,924; income sum 2,390,556; Austin NAICS 7112 establishments 28 and 711310 employees 660; El Paso 711320 NULL row 1; CBP sums 5,671 establishments and 158,097 employees; events New York 2,319, Los Angeles 973, Las Vegas 930, El Paso 70; New York venues 117; Mezzrow 253 events; Music 8,689 and Sports 2,206; onsale 10,291 and cancelled 160; Rock 1,676, Jazz 1,387, Other 1,123; dates 2026-11-12 to 2027-01-31; 7,030 distinct event names; latitude sum 35,867.716865 and longitude sum -92,871.581492 |
+
+- **Note on the output:** in check 48 the printed description reads "not ')"
+  because of a quoting slip in the label text only (the check itself is
+  correct). The script was regenerated afterwards with the label "not empty
+  text"; nothing else changed.
+- **Fix / decision:** none needed. All final checks passed, so the staging
+  tables may be dropped (Step 8).
+
+### 2026-11-27: Step 8a, `working_dedup_v5` checksums re-verified before dropping the staging tables (Nathan; run by Claude)
+
+- **Source files:** `data/processed/working_2026-11-10_222442/working_dedup_v5/`
+- **Action:** after the Step 7 final checks passed and before the staging
+  tables were dropped (Decision 5), the SHA-256 checksums of the six CSV files
+  were recomputed and compared with the values recorded in the "Checksums ...
+  before building" entry. Read-only.
+- **Command:**
+
+  ```bash
+  cd data/processed/working_2026-11-10_222442/working_dedup_v5 && shasum -a 256 *.csv
+  ```
+
+- **Result:** **6 of 6 checksums match** the recorded values, so the files
+  were not changed by Steps 4 to 7 (they were only read by `LOAD DATA`). The
+  modification time of all six files is still Nov 21 13:00.
+- **Fix / decision:** none needed. The staging tables may be dropped.
+
+### 2026-11-27: Step 8b, drop the staging tables (Nathan)
+
+- **Source files:** none.
+- **Script:** `sql/08_drop_staging_tables.sql`
+- **Action:** after Step 7 passed and the `working_dedup_v5` checksums were
+  re-verified (Step 8a), Nathan ran the script in a Mac terminal from the
+  repository root, as `root`. It drops only `stg_event`, `stg_venue`,
+  `stg_market_label`, `stg_acs` and `stg_cbp`, each named explicitly, then runs
+  14 checks.
+- **Command:**
+
+  ```bash
+  mysql -u root -p --table < sql/08_drop_staging_tables.sql
+  ```
+
+- **Result** (reported by Nathan; the output itself was not pasted into the
+  session, so the values below are the expected values he confirmed): **all 14
+  checks PASS; FAILED CHECKS = 0.**
+
+  | Check | Expected |
+  |---|---|
+  | Tables in the database | 8 |
+  | Tables whose name starts with `stg_` | 0 |
+  | Tables that are the 8 ERD tables | 8 |
+  | Rows: `metro_area` 24; `segment` 2; `industry` 3; `venue` 965; `genre` 41; `metro_demographic` 24; `metro_industry` 72; `event` 10,895 | all match |
+  | Foreign-key columns; columns in the database | 7; 36 |
+  | Global `local_infile` | 0 (off) |
+
+- **Fix / decision:** none needed. The database now has exactly the 8
+  permanent tables of the approved ERD.
+
+### 2026-11-27: Step 9, data dictionary extraction and verification (Nathan; verified by Claude)
+
+- **Script:** `scripts/extract_data_dictionary.py` (reads
+  `information_schema`; changes nothing).
+- **Action:** Nathan ran the extractor after the staging tables were dropped,
+  so only the 8 permanent tables are listed. It wrote
+  `docs/data_dictionary_reference_generated.md` (generated 2026-11-27 21:09,
+  with the query used). Every description is "to be written".
+- **Command:**
+
+  ```bash
+  python3 scripts/extract_data_dictionary.py --database ticket_market_analytics --output docs/data_dictionary_reference_generated.md
+  ```
+
+- **Verification** (by Claude, comparing the generated file column by column
+  with the approved column specification in Decisions 2, 3 and 4 of
+  `docs/project_decisions.md`): **every column matches.**
+
+  | Item | Expected | Found |
+  |---|---|---|
+  | Tables | 8 | 8 |
+  | Columns | 36 | 36 |
+  | Primary-key columns | 9 (7 single-column keys and the 2-column key of `metro_industry`) | 9 |
+  | Foreign-key columns | 7 | 7 |
+  | Columns that allow NULL | 12 | 12 |
+  | Columns with collation `utf8mb4_bin` | 7 | 7 |
+  | Type, NULL rule, key and foreign-key target of each column | as in Decision 3 | no differences |
+
+  The generated file contains no staging table, password or personal path.
+- **Note on the plan:** Decision 5 listed the data dictionary extract among
+  the final checks before the staging tables were dropped. The structure was
+  checked before the drop by Step 7 (group A, from `information_schema`), and
+  the extract itself was made and compared after the drop, as Step 9.
+- **Not yet done:** the column descriptions (CLAUDE.md: descriptions are
+  written or confirmed by Nathan or Nick; until then they stay "to be
+  written").
+- **Fix / decision:** none needed.
