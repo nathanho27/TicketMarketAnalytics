@@ -234,3 +234,180 @@ compared with the counts in CLAUDE.md, "Working Dataset".
 
 - **Next:** run the same command after the load and before the staging tables
   are dropped; the values must match.
+
+### 2026-11-27: Step 1, create the database (Nathan)
+
+- **Source files:** none (no data read in this step).
+- **Script:** `sql/01_create_database.sql`
+- **Action:** Nathan ran the script in a Mac terminal from the repository
+  root, as `root`. It creates the project database with the character set
+  from Decision 1. The script writes `COLLATE utf8mb4_0900_ai_ci` explicitly
+  (the same as this server's default) so the database is identical on any
+  MySQL 8.0+ server.
+- **Command:**
+
+  ```bash
+  mysql -u root -p --table < sql/01_create_database.sql
+  ```
+
+- **Result** (output pasted by Nathan):
+
+  | database_name | character_set | collation |
+  |---|---|---|
+  | `ticket_market_analytics` | `utf8mb4` | `utf8mb4_0900_ai_ci` |
+
+- **Not shown in the pasted output:** the two checks that are expected to
+  return no rows (the database absent before the step, no tables after it).
+  With `--table`, an empty result prints nothing. No error was reported.
+- **Fix / decision:** none needed.
+
+### 2026-11-27: Step 2, create the 8 tables (Nathan)
+
+- **Source files:** none (no data read in this step).
+- **Script:** `sql/02_create_tables.sql`
+- **Action:** Nathan ran the script in a Mac terminal from the repository
+  root, as `root`. It creates the 8 tables of the approved ERD, parents
+  first, with the types, `NOT NULL` rules, keys and collations from Decisions
+  2, 3 and 4, then runs five checks. No error was reported.
+- **Command:**
+
+  ```bash
+  mysql -u root -p --table < sql/02_create_tables.sql
+  ```
+
+- **Results** (output pasted by Nathan; all five checks match the expected
+  values):
+
+  | Check | Expected | Result |
+  |---|---|---|
+  | A: tables and columns | 8 and 36 | 8 and 36 |
+  | B: foreign-key columns whose collation matches the parent column | 7 of 7 | 7 of 7 `match` |
+  | C: columns using `utf8mb4_bin` | 7 | 7 |
+  | D: columns that allow NULL | 12 | 12 |
+  | E: `UNIQUE` keys on `metro_area` | `census_metro_name` and `market_label` | both, `NON_UNIQUE = 0` |
+
+  - **B (foreign keys):** `event.genre_id` to `genre.genre_id`, `event.venue_id`
+    to `venue.venue_id` and `genre.segment_id` to `segment.segment_id` use
+    `utf8mb4_bin` on both sides. `metro_demographic.metro_area_geoid`,
+    `metro_industry.metro_area_geoid`, `metro_industry.naics_code` and
+    `venue.metro_area_geoid` use `utf8mb4_0900_ai_ci` on both sides.
+  - **C (`utf8mb4_bin` columns):** `event.event_id`, `event.genre_id`,
+    `event.venue_id`, `genre.genre_id`, `genre.segment_id`,
+    `segment.segment_id`, `venue.venue_id`.
+  - **D (nullable columns):** `event.event_url`, `event.local_time`,
+    `event.subgenre`, `event.ticketing_platform`,
+    `metro_industry.establishments`, `metro_industry.employees`,
+    `venue.venue_address`, `venue.venue_city`, `venue.venue_state`,
+    `venue.venue_postal_code`, `venue.venue_latitude`,
+    `venue.venue_longitude`.
+  - **E (`metro_area` keys):** `PRIMARY` on `metro_area_geoid`,
+    `uq_metro_area_census_metro_name` and `uq_metro_area_market_label`.
+- **Fix / decision:** none needed. The tables are empty; the data is loaded
+  in Steps 4 to 6.
+
+### 2026-11-27: Step 3, create the staging tables (Nathan)
+
+- **Source files:** none (no data read in this step).
+- **Script:** `sql/03_create_staging_tables.sql`
+- **Action:** Nathan ran the script in a Mac terminal from the repository
+  root, as `root`. It creates the five staging tables (`stg_event`,
+  `stg_venue`, `stg_market_label`, `stg_acs`, `stg_cbp`). Each has the
+  columns of its CSV in header order, all as text (`VARCHAR(500)`; the four
+  Ticketmaster ID columns `VARCHAR(100)` with `utf8mb4_bin`), no keys and no
+  constraints. The script then runs four checks.
+- **Command:**
+
+  ```bash
+  mysql -u root -p --table < sql/03_create_staging_tables.sql
+  ```
+
+- **Result:** Nathan reported that all four checks matched the expected
+  values. The output itself was not pasted into the session, so the numbers
+  below are the expected values, not a transcript:
+
+  | Check | Expected |
+  |---|---|
+  | A: columns per staging table | `stg_acs` 3, `stg_cbp` 5, `stg_event` 13, `stg_market_label` 3, `stg_venue` 9 |
+  | B: columns using `utf8mb4_bin` | 5 (`stg_event.event_id`, `genre_id`, `segment_id`, `venue_id`; `stg_venue.venue_id`) |
+  | C: keys or constraints on staging tables | none (no rows) |
+  | D: tables in the database; rows in each staging table | 13; 0 |
+
+- **Before running:** the column order of each staging table was checked
+  against the header row of its `working_dedup_v5` CSV (all five match).
+- **Fix / decision:** none needed.
+
+### 2026-11-27: Verification of the local `working_dedup_v5` files before loading (Nathan; run by Claude)
+
+- **Source files:** `data/processed/working_2026-11-10_222442/working_dedup_v5/`
+- **Action:** read-only check that the files about to be loaded are the
+  finalized `v5` files and not an older version.
+- **Result:**
+  - **Path:** the folders `working_dedup_v2` to `working_dedup_v5` exist under
+    `working_2026-11-10_222442`; a search of Desktop, Downloads and Documents
+    found only one folder named `working_dedup_v5`. The five paths used by
+    `sql/04b_load_staging.sql` (`working_dedup_v5/<file>.csv`) all exist when
+    run from `working_2026-11-10_222442`.
+  - **Checksums:** the SHA-256 of all six files equals the values recorded in
+    the earlier "Checksums ... before building" entry (6 of 6).
+  - **Rows and columns** (header excluded; every row has the expected number
+    of fields): `working_events.csv` 10,895 × 13; `working_venues.csv`
+    965 × 9; `market_labels.csv` 24 × 3; `working_acs1_2025_metros.csv`
+    24 × 3 (`metro_area_geoid`, `population`, `median_household_income`);
+    `working_cbp2023_metros.csv` 72 × 5 (`metro_area_geoid`, `naics_code`,
+    `naics_label`, `establishments`, `employees`);
+    `working_excluded_events.csv` 548 × 5. These match the counts recorded in
+    `docs/project_decisions.md` for `v5`.
+  - **Lineage:** events, venues, excluded events and market labels are
+    byte-identical to `working_dedup_v4` and differ from the older
+    `working_dedup_v3`. The `v5` folder's `drop_erd_unused_columns.log` ends
+    with "Problems: none". File modification time: Nov 21 13:00:42 2026.
+- **Limit of this check:** the checksums were recorded from these same local
+  files earlier today, so they show the files have not changed since then.
+  Nick's copies were not compared, because no checksums from his machine are
+  recorded.
+- **Fix / decision:** none needed.
+
+### 2026-11-27: Step 4, load the CSVs into the staging tables (Nathan)
+
+- **Source files:** the five CSVs in `working_dedup_v5` read by the load
+  (`working_events.csv`, `working_venues.csv`, `market_labels.csv`,
+  `working_acs1_2025_metros.csv`, `working_cbp2023_metros.csv`).
+  `working_excluded_events.csv` is not loaded. The files were only read.
+- **Scripts:** `sql/04a_enable_local_infile.sql`, `sql/04b_load_staging.sql`,
+  `sql/04c_disable_local_infile.sql`
+- **Setting change (approved by Nathan):** `local_infile` is a global server
+  setting. Nathan approved turning it on temporarily and asked for it to be
+  turned off immediately after the load, not at the end of the build.
+- **Commands** (all as `root`, in a Mac terminal):
+
+  ```bash
+  # 4a, from the repository root
+  mysql -u root -p --table < sql/04a_enable_local_infile.sql
+
+  # 4b, from the folder that contains working_dedup_v5
+  cd data/processed/working_2026-11-10_222442
+  mysql -u root -p --local-infile=1 --default-character-set=utf8mb4 --table < ../../../sql/04b_load_staging.sql
+
+  # 4c, back in the repository root
+  cd ../../..
+  mysql -u root -p --table < sql/04c_disable_local_infile.sql
+  ```
+
+- **Result** (reported by Nathan; the output itself was not pasted into the
+  session, so the numbers below are the expected values he confirmed):
+
+  | Part | Result |
+  |---|---|
+  | 4a: `local_infile` | 0 before, 1 after |
+  | 4b: warnings after each of the 5 loads | 0, 0, 0, 0, 0 |
+  | 4b check A: staging rows | `stg_event` 10,895; `stg_venue` 965; `stg_market_label` 24; `stg_acs` 24; `stg_cbp` 72 |
+  | 4b check B: distinct IDs, case-sensitive | 10,895 event IDs; 965 venue IDs; 41 genre IDs; 2 segment IDs |
+  | 4b check C: special characters in event names | 62 with double quotes; 558 with commas; 268 with non-ASCII characters; 68 with ` \| `; longest name 347 characters |
+  | 4c: `local_infile` | 1 before, **0 after (confirmed by Nathan)** |
+
+- **Checks made before loading:** the local `working_dedup_v5` files were
+  verified (checksums, rows and columns) in the earlier "Verification ..."
+  entry. A rehearsal on a throwaway server (not the project database) showed
+  that without 4a the load stops with error 3948, and without the
+  `--local-infile=1` flag it stops with error 2068.
+- **Fix / decision:** none needed. No import errors occurred.
