@@ -2,8 +2,8 @@
 
 Read-only: runs one SELECT against information_schema and writes a Markdown
 reference with, for every base table in the database:
-  - column name, MySQL column type, nullability, default, extra
-    (e.g. auto_increment);
+  - column name, MySQL column type, collation (text columns only),
+    nullability, default, extra (e.g. auto_increment);
   - primary-key membership and foreign-key references.
 
 Descriptions are left as "to be written": per CLAUDE.md, only Nathan or Nick
@@ -35,6 +35,7 @@ QUERY = """SELECT
   c.ORDINAL_POSITION AS position,
   c.COLUMN_NAME      AS column_name,
   c.COLUMN_TYPE      AS column_type,
+  c.COLLATION_NAME   AS collation_name,
   c.IS_NULLABLE      AS is_nullable,
   c.COLUMN_DEFAULT   AS column_default,
   c.EXTRA            AS extra,
@@ -147,13 +148,13 @@ def to_markdown(rows, database, sql, run_at):
             f"- Foreign keys: {len(fks)}",
             "- Table description: to be written",
             "",
-            "| # | Column | MySQL type | Nullable | PK | References | Default | Extra | Description |",
-            "|---|---|---|---|---|---|---|---|---|",
+            "| # | Column | MySQL type | Collation | Nullable | PK | References | Default | Extra | Description |",
+            "|---|---|---|---|---|---|---|---|---|---|",
         ]
         for c in cols:
             out.append("| " + " | ".join([
                 md(c["position"]), f"`{md(c['column_name'])}`", f"`{md(c['column_type'])}`",
-                md(c["is_nullable"]), "PK" if c["is_pk"] not in (None, "0") else "",
+                md(c["collation_name"]), md(c["is_nullable"]), "PK" if c["is_pk"] not in (None, "0") else "",
                 md(c["references_to"]), md(c["column_default"]), md(c["extra"]), "to be written",
             ]) + " |")
         out.append("")

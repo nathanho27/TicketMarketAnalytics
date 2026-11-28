@@ -38,7 +38,7 @@ Nathan and Nick. **Both partners must participate in every phase.**
 | Phase | Due | Points | Requirements |
 |---|---|---|---|
 | Phase 2: ER diagram | November 22, 2026 (extended from November 19) | 25 | Must include all entities, attributes, primary keys, foreign keys, relationships, cardinalities, and proper normalization. |
-| Phase 3: Database creation and business questions | November 30, 2026 | 25 | Build and populate the MySQL database with at least 6 tables. Submit a 3–4 page report explaining how the dataset was converted into tables, actual import challenges and solutions, a complete data dictionary, and at least 6 business questions of varying complexity. |
+| Phase 3: Database creation and business questions | November 30, 2026, 11:59 PM | 25 | Build and populate the MySQL database with at least 6 tables. Submit a 3–4 page report explaining how the dataset was converted into tables, actual import challenges and solutions, a complete data dictionary, and at least 6 business questions of varying complexity. |
 | Phase 4: SQL queries and visualizations | December 9, 2026 | 35 | Submit a `.sql` file and a visualization PDF. Queries should demonstrate joins, grouping, subqueries, and window functions. |
 | Phase 5: Video presentation | December 9, 2026 | 15 | Maximum 15 minutes, one business question per slide, business-focused insights, and no SQL on slides. |
 
@@ -364,7 +364,57 @@ These describe how to *record* information, not what the database should be.
 
 ## Current phase
 
-Phase 2: reviewing the processed data, normalizing it, and designing the ERD.
+**Phase 3: database creation and business questions.** Started 2026-11-27;
+due **Monday, November 30, 2026 at 11:59 PM**.
+
+Phase 2 (the ER diagram) was submitted on 2026-11-21. The finalized design is
+8 tables, 36 attributes and 7 relationships, recorded in
+`docs/project_decisions.md` ("2026-11-19: Approved ERD design", "2026-11-20:
+ERD revisions", "2026-11-21: Final ERD check"). Those decisions are final for
+Phase 3 and are not being revisited.
+
+**Inputs:** the finalized ERD, and the data in
+`data/processed/working_2026-11-10_222442/working_dedup_v5/`.
+
+**Phase 3 deliverables** (see the course requirements table above):
+- a MySQL database with at least 6 tables (the ERD has 8), populated from
+  `working_dedup_v5`;
+- a 3–4 page report covering how the dataset was converted into tables,
+  actual import challenges and solutions, a complete data dictionary, and at
+  least 6 business questions of varying complexity.
+
+**Database:** `ticket_market_analytics` (character set `utf8mb4`). Table names
+are the ERD entity names in lowercase snake_case (e.g. `metro_area`). The
+build decisions are in `docs/project_decisions.md` ("2026-11-27: Phase 3 build
+decisions"); Nathan approved them and Nick is to confirm.
+
+**Expected row counts after loading** (from the `working_dedup_v5` files,
+verified 2026-11-27):
+
+| Table | Rows | Comes from |
+|---|---|---|
+| `metro_area` | 24 | `market_labels.csv` |
+| `metro_demographic` | 24 | `working_acs1_2025_metros.csv` |
+| `industry` | 3 | distinct `naics_code`, `naics_label` in `working_cbp2023_metros.csv` |
+| `metro_industry` | 72 | `working_cbp2023_metros.csv` |
+| `venue` | 965 | `working_venues.csv` |
+| `segment` | 2 | distinct `segment_id`, `segment` in `working_events.csv` |
+| `genre` | 41 | distinct `genre_id`, `genre`, `segment_id` in `working_events.csv` |
+| `event` | 10,895 | `working_events.csv` |
+
+`working_excluded_events.csv` is not part of the ERD and is not loaded.
+
+**Where the work is recorded:**
+- `docs/database_build_log.md`: each build and import step, with exact
+  commands and any actual errors (only issues that really occurred);
+- `docs/data_dictionary_reference.md`: metadata generated from the live
+  database with `scripts/extract_data_dictionary.py`; descriptions are written
+  or confirmed by Nathan and Nick;
+- `docs/project_decisions.md`: build decisions, and the business questions
+  verbatim with the date approved.
+
+Row counts can be checked against the source files with
+`scripts/check_import_counts.py`.
 
 ## Oral Defense Study Points
 
@@ -531,3 +581,18 @@ OTHER POINTS:
 
 ### 2026-11-21 — Nick Silva (end of session / stopping point)
 - Phase 2 ERD submitted (TicketMarketAnalytics_ERD_1page.pdf, one landscape page, exported from draw.io). Final design: 8 tables, 36 attributes, 7 relationships, current data in working_dedup_v5. Next session starts with git pull, then Phase 3 (database build and report, due Nov 30). Phase 3 import notes are already recorded: event names with double quotes, ZIP codes with stray spaces, two venue_city values with trailing spaces ('Las Vegas ', 'Brooklyn '), and the El Paso NULL counts.
+
+### 2026-11-27 — Nathan Ho
+- Started Phase 3 (due Monday Nov 30, 11:59 PM). Pulled Nick's commits `c480c0c` and `17dc34c`; "Current phase" in this file now says Phase 3.
+- MySQL 9.5.0 is running on my Mac. Server settings (`local_infile` OFF, default collation `utf8mb4_0900_ai_ci`, strict `sql_mode`) are recorded in `docs/database_build_log.md`. Nothing has been created on the server yet, and the `working_dedup_v5` CSVs are unchanged (checksums recorded in the build log).
+- **Six build decisions** recorded in `docs/project_decisions.md` ("2026-11-27: Phase 3 build decisions"), approved by me; **Nick to confirm**:
+  1. database `ticket_market_analytics`, character set `utf8mb4`;
+  2. `utf8mb4_bin` on the four Ticketmaster ID columns (IDs that differ only in letter case would otherwise be merged or silently skipped on load);
+  3. column types, lengths and NULL rules matching the ERD, lowercase table names, `UNIQUE` on `census_metro_name` and `market_label`;
+  4. latitude/longitude as `DECIMAL(18,15)`, nullable;
+  5. staging tables (`stg_`) filled from the CSVs, validated, copied into the final tables, and dropped only after all final checks pass;
+  6. cleaning rules: trim the four venue text columns, `NULLIF` on the 12 nullable columns, ACS values validated as whole numbers before casting.
+- `scripts/extract_data_dictionary.py` now includes a `Collation` column.
+- Tests behind these decisions ran on throwaway MySQL servers, not on the project database; they are labeled as tests in the build log.
+- **Next:** turn on local file loading for the load, create the 8 tables, load and validate the staging tables, copy into the final tables, run the final checks, drop the staging tables, then generate the data dictionary. Business questions and the report are still to be written by Nathan and Nick.
+

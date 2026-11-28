@@ -620,6 +620,313 @@ The approved eight-table design is unchanged.
   professor's ERD examples. Source years (2025 ACS, 2023 CBP) remain
   documented in `docs/data_sources.md` and this file.
 
+## 2026-11-27: Phase 3 build decisions
+
+Decisions for building and loading the MySQL database. The ERD design above
+is final and is not revisited here. Each decision was reviewed one at a time
+(options and a recommendation, then approval). Approved by Nathan; Nick to
+confirm.
+
+### Decision 1: database name and character set
+
+- **Decision:** the database is named `ticket_market_analytics`, with
+  character set `utf8mb4` written explicitly in `CREATE DATABASE`.
+- **Approved:** Nathan, 2026-11-27.
+- **Options considered for the name:** `TicketMarketAnalytics`,
+  `ticketmarketanalytics`, `ticket_market_analytics`.
+- **Reason (from the options reviewed):**
+  - lowercase snake_case behaves the same on any server, whether or not it
+    treats names as case-sensitive, and matches the snake_case column
+    names;
+  - none of the 6 existing databases on this server uses the name;
+  - `utf8mb4` is needed because 268 event names and 3 venue names in
+    `working_dedup_v5` contain non-ASCII characters; it is written
+    explicitly so a shared `.sql` file also works on a server whose default
+    differs.
+
+### Decision 2: collation for the Ticketmaster ID columns
+
+- **Decision:** the four Ticketmaster ID columns use the case-sensitive
+  collation `utf8mb4_bin`. Every other text column keeps the database default
+  (`utf8mb4_0900_ai_ci`).
+- **Approved:** Nathan, 2026-11-27 (Option A below).
+- **Options considered:**
+  - **A (chosen):** `utf8mb4_bin` on the four ID columns only;
+  - B: make the whole database case-sensitive;
+  - C: leave the default (not workable, see the test results).
+- **Reason (from the options reviewed):**
+  - the server default `utf8mb4_0900_ai_ci` ignores letter case, but some
+    Ticketmaster IDs differ from another ID only in case. In
+    `working_dedup_v5`: 6 of 41 `genre_id` values (3 pairs, e.g.
+    `KnvZfZ7vAde` Basketball and `KnvZfZ7vAdE` Football), 18 of 965
+    `venue_id` values (9 pairs) and 565 of 10,895 `event_id` values (280
+    groups); `segment_id` has none;
+  - the problem is specific to IDs, so only IDs get the stricter rule and
+    normal text behavior is unchanged;
+  - `utf8mb4_bin` works on every MySQL version (`utf8mb4_0900_bin` and
+    `utf8mb4_0900_as_cs` need 8.0.17 or later), and the IDs contain only
+    letters, digits, `-` and `_`, with no spaces.
+- **Columns and matching rule.** Both sides of every foreign key must use the
+  same character set and collation. MySQL rejects a mismatch with error
+  3780 (see the test results).
+
+  | Column | Role | Collation |
+  |---|---|---|
+  | `segment.segment_id` | PK | `utf8mb4_bin` |
+  | `genre.genre_id` | PK | `utf8mb4_bin` |
+  | `genre.segment_id` | FK to `segment.segment_id` | `utf8mb4_bin` |
+  | `venue.venue_id` | PK | `utf8mb4_bin` |
+  | `event.event_id` | PK | `utf8mb4_bin` |
+  | `event.venue_id` | FK to `venue.venue_id` | `utf8mb4_bin` |
+  | `event.genre_id` | FK to `genre.genre_id` | `utf8mb4_bin` |
+
+  The non-Ticketmaster keys `metro_area_geoid` and `naics_code` contain only
+  digits and keep the database default on both sides of their foreign keys.
+  Any staging table used for loading must declare the same collation on
+  the four ID columns. (Table names are the lowercase names settled in
+  Decision 3.)
+- **Effect on analysis:** with the default collation,
+  `COUNT(DISTINCT event_name)` merges names that differ only in case or
+  accents (6,984 distinct names, against 7,030 under exact comparison).
+  Event-variety results should state which comparison was used;
+  `COUNT(DISTINCT BINARY event_name)` gives exact counts.
+- **Test results:** recorded in `docs/database_build_log.md`
+  ("Collation test on a throwaway server"). That test did not touch the
+  project database.
+
+### Decision 3: column types, lengths, NULL rules and table names
+
+- **Decision:** the types, lengths and NULL rules in the table below, with
+  lowercase snake_case table names. Latitude and longitude types are settled
+  in Decision 4.
+- **Approved:** Nathan, 2026-11-27.
+- **Reason (from the options reviewed):**
+  - NULL rules follow the finalized ERD exactly: required (bold) attributes
+    are `NOT NULL`, optional (plain) attributes allow NULL. Checked against
+    the ERD file: 36 columns, 24 required, 0 differences (the diagram file
+    was read with `market_label` made required, as recorded in "2026-11-21:
+    Final ERD check");
+  - lengths are the longest value in `working_dedup_v5` plus headroom; no
+    `TEXT` types are needed;
+  - `CHAR` where the length never varies (`genre_id` 11, `segment_id` 18,
+    `metro_area_geoid` 5, `venue_state` 2, ZIP 5), `VARCHAR` where it does
+    (`event_id` 13–21, `venue_id` 10–13, `naics_code` 4 or 6);
+  - `status` is `VARCHAR(12)`: it matches the ERD, and `ENUM` or `CHECK`
+    constraints would add rules the ERD does not show;
+  - whole-number measures (`population`, income, establishments,
+    employees) are `INT`: every source value is a whole number (stored as
+    e.g. `2620945.0`) and the ranges fit easily;
+  - primary keys are the source IDs (no auto-numbering), as in the ERD;
+  - table names are lowercase snake_case, consistent with Decision 1 and the
+    column names. Each table is the ERD entity of the same name in lowercase
+    (e.g. `metro_area` for METRO_AREA).
+- **Alternatives considered:** keeping uppercase table names to match the ERD
+  exactly; `ENUM` for `status`.
+
+| Table | Column | Type | NULL? | Evidence in `working_dedup_v5` |
+|---|---|---|---|---|
+| `segment` | `segment_id` (PK) | `CHAR(18)` | no | always 18 characters |
+| | `segment` | `VARCHAR(20)` | no | max 6 |
+| `genre` | `genre_id` (PK) | `CHAR(11)` | no | always 11 |
+| | `segment_id` (FK) | `CHAR(18)` | no | |
+| | `genre` | `VARCHAR(30)` | no | max 18 |
+| `event` | `event_id` (PK) | `VARCHAR(25)` | no | 13–21 |
+| | `venue_id` (FK) | `VARCHAR(15)` | no | |
+| | `genre_id` (FK) | `CHAR(11)` | no | |
+| | `event_name` | `VARCHAR(400)` | no | max 347 |
+| | `event_url` | `VARCHAR(255)` | yes | max 224 |
+| | `status` | `VARCHAR(12)` | no | max 11, 4 values |
+| | `local_date` | `DATE` | no | 2026-11-12 to 2027-01-31 |
+| | `local_time` | `TIME` | yes | 245 blank |
+| | `subgenre` | `VARCHAR(30)` | yes | max 18; 8,693 blank |
+| | `ticketing_platform` | `VARCHAR(40)` | yes | max 29 |
+| `venue` | `venue_id` (PK) | `VARCHAR(15)` | no | 10–13 |
+| | `metro_area_geoid` (FK) | `CHAR(5)` | no | always 5 digits |
+| | `venue_name` | `VARCHAR(80)` | no | max 64 |
+| | `venue_address` | `VARCHAR(60)` | yes | max 41; 16 blank |
+| | `venue_city` | `VARCHAR(40)` | yes | max 17 |
+| | `venue_state` | `CHAR(2)` | yes | always 2 |
+| | `venue_postal_code` | `CHAR(5)` | yes | always 5 digits after trimming |
+| | `venue_latitude`, `venue_longitude` | `DECIMAL(18,15)` (Decision 4) | yes | up to 15 and 14 decimals |
+| `metro_area` | `metro_area_geoid` (PK) | `CHAR(5)` | no | |
+| | `census_metro_name` | `VARCHAR(80)` | no, **UNIQUE** | max 57 |
+| | `market_label` | `VARCHAR(30)` | no, **UNIQUE** | max 21 |
+| `metro_demographic` | `metro_area_geoid` (PK, FK) | `CHAR(5)` | no | |
+| | `population` | `INT` | no | 880,884 to 20,112,448 |
+| | `median_household_income` | `INT` | no | 61,596 to 166,364 |
+| `industry` | `naics_code` (PK) | `VARCHAR(6)` | no | 4 or 6 digits |
+| | `naics_label` | `VARCHAR(100)` | no | max 75 |
+| `metro_industry` | `metro_area_geoid` (PK, FK) | `CHAR(5)` | no | |
+| | `naics_code` (PK, FK) | `VARCHAR(6)` | no | |
+| | `establishments` | `INT` | yes | 7 to 452; 1 blank (El Paso) |
+| | `employees` | `INT` | yes | 40 to 20,964; 1 blank (El Paso) |
+
+- **UNIQUE constraints on `metro_area`.** The ERD records `market_label` and
+  `census_metro_name` as candidate keys alongside the primary key
+  `metro_area_geoid` ("2026-11-21: Final ERD check" and the Oral Defense
+  Study Points in `CLAUDE.md`). A candidate key must be unique and non-null,
+  so both columns get `UNIQUE` and `NOT NULL` in the database. Checked in the
+  data: 24 rows, 24 distinct values and 0 blanks for each, and still 24
+  distinct values under the case- and accent-insensitive default collation,
+  so the constraint cannot reject the load. Other columns that happen to be
+  unique (`genre.genre`, `segment.segment`, `industry.naics_label`) are not
+  declared candidate keys in the ERD decisions, so they get no `UNIQUE`
+  constraint.
+- **ZIP codes and `CHAR(5)`.** 3 ZIP codes in the file have stray spaces. A
+  test showed that loading them untrimmed into `CHAR(5)` with `LOAD DATA
+  LOCAL` truncates `' 32210'` to `' 3221'` with a warning rather than an
+  error (see the build log). The ZIP codes therefore have to be trimmed
+  while loading (Decision 6).
+- **Data dictionary tool.** `scripts/extract_data_dictionary.py` now also
+  reports each text column's collation, so the data dictionary shows the
+  `utf8mb4_bin` ID columns (Nathan approved the change, 2026-11-27).
+
+### Decision 4: latitude and longitude type
+
+- **Decision:** `venue_latitude` and `venue_longitude` are `DECIMAL(18,15)`
+  and stay nullable, as specified in the ERD.
+- **Approved:** Nathan, 2026-11-27.
+- **Options considered:** `DECIMAL(10,7)`, `DECIMAL(18,15)`, `DOUBLE`/`FLOAT`.
+- **Reason (as stated by Nathan):** preserve the original coordinate values
+  and avoid unnecessary rounding warnings.
+- **Supporting facts** (`working_dedup_v5`, tested on a throwaway server; see
+  the build log):
+  - no coordinate has more than 15 decimals (latitude) or 14 (longitude), so
+    `DECIMAL(18,15)` holds every value exactly, with room for 3 whole digits;
+  - `DECIMAL(10,7)` would round 102 latitudes and 92 longitudes (by at most
+    about 0.56 cm) and show 194 warnings on every load, which could hide a
+    real warning;
+  - `DECIMAL(18,15)` loaded all 965 rows with 0 warnings and values identical
+    to the file, so the imported coordinates do not differ from the source;
+  - no analysis theme uses coordinates, so precision has no effect on the
+    business questions.
+
+### Decision 5: filling the derived tables with staging tables
+
+- **Decision:** `segment`, `genre` and `industry` are filled from staging
+  tables. Each source CSV is loaded as-is into a staging table, checked, and
+  then copied into the final tables with `INSERT ... SELECT`. The same staging
+  tables also feed `event`, `venue`, `metro_area`, `metro_demographic` and
+  `metro_industry`, so every cleaning step happens in SQL.
+- **Approved:** Nathan, 2026-11-27.
+- **Rules set by Nathan:**
+  1. the `working_dedup_v5` CSVs stay unchanged (they are only read);
+  2. the staging data is validated before it is transferred;
+  3. the staging tables are dropped only after all final checks pass.
+- **Options considered:** (A, chosen) staging tables; (B) load the large file
+  directly into each table and let duplicates be skipped; (C) generate small
+  derived CSV files first; (D) type the rows by hand.
+- **Reason (from the options reviewed):**
+  - it shows the normalization in SQL, which is how the report describes the
+    conversion of the dataset into tables;
+  - a dependency check can be run before anything is inserted (tested: 0
+    violations for `genre_id` to `segment_id` and `genre`, `segment_id` to
+    `segment`, and `naics_code` to `naics_label`; 2, 41 and 3 rows with 0
+    warnings);
+  - option B reached 41 genres but raised 10,854 warnings, which would hide a
+    real one, and option C adds a script and derived files to document.
+- **Staging design:**
+  - tables `stg_event`, `stg_venue`, `stg_market_label`, `stg_acs` and
+    `stg_cbp` (`working_excluded_events.csv` is not loaded);
+  - every column is `VARCHAR` so blanks and values such as `2620945.0` arrive
+    exactly as written; no keys or constraints;
+  - the four Ticketmaster ID columns use `utf8mb4_bin` (with the default
+    collation `COUNT(DISTINCT genre_id)` was 38 instead of 41);
+  - loaded with `LOAD DATA LOCAL INFILE ... CHARACTER SET utf8mb4`.
+- **Validation before transfer (all must pass):**
+  - row counts equal the source: 10,895 events, 965 venues, 24 market labels,
+    24 ACS rows, 72 CBP rows;
+  - 0 warnings after each load (`SHOW WARNINGS`);
+  - the three dependency checks above return 0 violations;
+  - the key columns are unique under case-sensitive comparison (`event_id`,
+    `venue_id`, `metro_area_geoid` in each metro file, and `metro_area_geoid`
+    with `naics_code` in `stg_cbp`);
+  - no blanks in any column that will be `NOT NULL`;
+  - every `venue_id` in `stg_event` exists in `stg_venue`, and every
+    `metro_area_geoid` in the venue, ACS and CBP files exists in
+    `stg_market_label`;
+  - the counts of stray spaces and blanks match the expected numbers in
+    Decision 6;
+  - the ACS values are whole numbers before they are cast (see Decision 6).
+- **Transfer order (parents first):** `metro_area`, `segment`, `industry`,
+  then `venue`, `genre`, `metro_demographic`, `metro_industry`, then `event`.
+- **Final checks before the staging tables are dropped (all must pass):**
+  - table row counts are 24, 2, 3, 965, 41, 24, 72 and 10,895;
+  - no orphan rows for any foreign key;
+  - the number of NULLs in each nullable column matches the staging counts;
+  - spot values agree with the source files (e.g. Austin population 2,620,945);
+  - the data dictionary extract shows the types, `NOT NULL` rules and
+    `utf8mb4_bin` collations from Decisions 2 and 3.
+- **Cleanup:** the `stg_` tables are dropped only after those checks pass,
+  and the exact `DROP` statements are logged in
+  `docs/database_build_log.md`. The finished database has exactly the 8 ERD
+  tables.
+
+### Decision 6: cleaning rules applied when copying from staging
+
+- **Decision:** the rules below are applied in the `INSERT ... SELECT`
+  statements that copy staging data into the final tables.
+- **Approved:** Nathan, 2026-11-27, with one requirement added by Nathan:
+  the ACS values are validated as whole numbers before they are cast.
+- **Rules:**
+  1. **Trim edge whitespace** on the four venue text columns only
+     (`venue_name`, `venue_address`, `venue_city`, `venue_postal_code`),
+     with `REGEXP_REPLACE(col, '^[[:space:]]+|[[:space:]]+$', '')`. Expected
+     values changed: 12 names, 17 addresses, 2 cities, 3 ZIP codes. Plain
+     `TRIM()` would change only 11 names: venue `rZ7HnEZ17rfqV` ends in a
+     non-breaking space that `TRIM()` does not remove. Every other column has
+     no edge whitespace (checked in staging) and is copied unchanged. Event
+     names are not altered; 16 contain a non-breaking space inside the name.
+  2. **Blank cells become NULL.** Every one of the 12 nullable columns is
+     wrapped in `NULLIF(col, '')`: `event_url`, `local_time`, `subgenre`,
+     `ticketing_platform`, `venue_address`, `venue_city`, `venue_state`,
+     `venue_postal_code`, `venue_latitude`, `venue_longitude`,
+     `establishments`, `employees`. Expected NULLs: `local_time` 245,
+     `subgenre` 8,693, `venue_address` 16, `establishments` 1 and
+     `employees` 1 (El Paso); the other seven nullable columns 0.
+  3. **ACS numbers: validate, then cast.** Before the transfer, in
+     `stg_acs`: every `population` and `median_household_income` value is
+     digits followed by `.0` (expected 24 of 24 for each), none is blank,
+     and the largest is below the `INT` limit of 2,147,483,647 (largest is
+     20,112,448). Only if that passes, the values are copied with
+     `CAST(col AS DECIMAL(12,0))`. The CBP counts (`establishments`,
+     `employees`) must be digits only when not blank (71 of 71 each) and are
+     copied with `NULLIF(col, '')`.
+  4. **Dates and times.** `local_date` (`YYYY-MM-DD` text) goes straight into
+     the `DATE` column; `local_time` is `CAST(NULLIF(local_time, '') AS
+     TIME)`.
+  5. **Load settings.** `LOAD DATA LOCAL INFILE ... CHARACTER SET utf8mb4
+     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY
+     '\n' IGNORE 1 LINES`, with the client connected using
+     `--default-character-set=utf8mb4`. Tested: 62 names with double quotes,
+     558 with commas, 268 with non-ASCII characters and 68 with ` | `
+     arrived intact; the longest name is 347 characters.
+  6. **Not cleaned (kept as documented limitations):** city spelling
+     variants (e.g. Foxboro/Foxborough), venue IDs that stand for the same
+     physical venue (explained below), placeholder genres, and the
+     non-breaking spaces inside event names.
+- **Reason (from the tests on a throwaway server; see the build log):**
+  - `TRIM()` leaves one value untrimmed;
+  - a blank `local_time` copied into a `TIME` column without `NULLIF` is
+    stored as `00:00:00` with no error and no warning (245 events);
+  - a blank copied into an `INT` or `DECIMAL` column fails with error 1366;
+  - a blank copied into a `VARCHAR` column becomes an empty string, not NULL
+    (`COUNT(subgenre)` was 10,895 instead of 2,202);
+  - `'2620945.0'` converts to `INT` with 0 warnings; the whole-number check
+    makes sure the cast cannot hide a fractional value.
+- **Venue IDs that stand for the same physical venue.** `venue_id` is unique
+  (965 distinct values), so the key is sound. The limitation is that Ticketmaster
+  can give one physical venue more than one venue ID, often one per ticketing
+  platform. In `working_dedup_v5`: 126 venue IDs share a name with another ID
+  (62 names, 58 of them within one city), 123 share an address and city, and
+  259 share exact coordinates (some are different rooms in one building).
+  Example: Blue Note Jazz Club, New York has `KovZpZAkJtvA` (1 event,
+  ticketmaster.com) and `rZ7HnEZaASU` (140 events, ticketweb.com). Effect:
+  counting venue IDs overstates the number of physical venues, and a venue's
+  events can be split across IDs. The IDs are not merged: the ERD and the
+  cleaning are final. Venue-concentration results should say "venue IDs" and
+  state this limitation.
+
 ## Open items
 
 - **Business questions:** not yet written. To be added here verbatim by
